@@ -8,7 +8,7 @@ NONE		='\033[0m'
 # comp
 NAME		= philo
 CC			= gcc
-CFLAGS		= -Wall -Werror -Wextra
+CFLAGS		= -pthread -Wall -Werror -Wextra
 AR 			= ar rcs
 RM			= rm -f
 
@@ -17,9 +17,11 @@ INC_PATH	:= includes
 SRCS_PATH	:= srcs
 BONUS_PATH	:= bonus
 
-SRCS 		= srcs/
+SRCS 		= srcs/philosophers.c \
+			srcs/error_management.c \
+			srcs/utils.c \
 
-SRCS_BONUS				= 
+#SRCS_BONUS				= 
 
 # libft
 LIBFT_PATH	:= libft/

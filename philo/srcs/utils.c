@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_management.c                                 :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/23 12:14:22 by salimon           #+#    #+#             */
-/*   Updated: 2022/06/27 10:33:05 by salimon          ###   ########.fr       */
+/*   Created: 2022/06/27 10:02:24 by salimon           #+#    #+#             */
+/*   Updated: 2022/06/27 10:03:20 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int error_management(t_datas *datas, unsigned int error_code)
+int	ft_atoi(const char *nb)
 {
-	if (error_code == 1)
-		write(STDERR_FILENO, "Invalid number of argument\n", 28);
-	if (error_code == 2)
-		write(STDERR_FILENO, "Invalid argument(s)\n", 18);
-	if (error_code == 3)
-		write (STDERR_FILENO, "Error during thread processing\n", 32);
-		
-	datas->philosopher->left_fork = 1;
-	return (0);
+	unsigned int	i;
+	int				signe;
+	int				nmb;
+
+	signe = 1;
+	i = 0;
+	nmb = 0;
+	while (nb[i] == ' ' || (nb[i] >= 8 && nb[i] <= 13))
+		i++;
+	if (nb[i] == '-' || nb[i] == '+')
+	{
+		if (nb[i] == '-')
+			signe *= -1;
+		i++;
+	}
+	while (nb[i] >= '0' && nb[i] <= '9')
+		nmb = nmb * 10 + nb[i++] - '0';
+	return (nmb * signe);
 }

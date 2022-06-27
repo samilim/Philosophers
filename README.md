@@ -1,7 +1,7 @@
 # Philosophers
 Ce projet est une introduction au threading et aux processus, et sur comment travailler sur le même espace mémoire.
 
-## Arguments
+## Arguments du project
 - nombre de philosophers (correspondant aussi au nb de fourchettes)
 - time to die (en ms) : Si un philo n'a pas commencé à manger [time to die] après le début de son précédent repas ou depuis le début de la simulation, il meurt.
 - time to eat (en ms) : Le temps pris par un philo pour manger. Le philo doit garder ses deux fourchettes pendant ce temps.
@@ -14,15 +14,32 @@ Ce projet est une introduction au threading et aux processus, et sur comment tra
 - Il ne doit pas y avoir + de 10ms entre la mort d'un philo et l'affichage du message annonçant sa mort.
 - Les philos ne doivent pas mourrir.
 
-## Mutex
-Permet de protéger un espace mémoire afin d'empêcher les philosophes de dupliquer les fourchettes.
+______
 
-## Semaphores
+# Notions
 
 ## Multi threading
 Chaque philosopher doit être représenté par un thread.
+pthread_detach permet de "détacher" un thread du thread principal. Un thread détaché n'est plus joinable. AUssi, ils clear automatiquement leurs ressources.
 
-## Multi processing
+### Difference between thread and process
+PLusieurs threads peuvent être contenus dans un seul process, l'inverse est impossible.
+Avec les process, on duplique les données lors de la creation de child process. On obtient alors des "variables" individuelles. 
+Avec les threads, les données utilisent la même mémoire, ce qui veut dire que tous les threadds peuvent acceder à toutes les variables et ne sont pas indépendants entre eux.
 
-# WARNINGS
+### Race conditions
+Quand une variable est modifiée simultanément dans plusieurs threads, cela peut créer un conflit qu'on appelle "Race condition". Pour éviter le problème nous utilisons alors des "mutex".
+
+### Mutex
+Un mutex permet de protéger un espace mémoire en "bloquant" une section de la mémoire, jusqu'a ce que cet espace soit débloqué
+Concrètement dans ce projet, les mutex vont permettre d'empêcher les philosophes de dupliquer les fourchettes.
+
+### Semaphores
+A voir plus tard pour les bonus (voir codevault)
+______
+
+## WARNINGS
 Libft non autorisée ! Ne pas oublier de déplacer les fonctions utlisées hors du dossier libft (voir sujet pour connaitre les fonctions autorisées).
+
+## Ressources intéressantes
+chaine ytb CodeVault
