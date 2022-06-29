@@ -6,19 +6,26 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2022/06/27 13:53:25 by salimon          ###   ########.fr       */
+/*   Updated: 2022/06/29 14:40:47 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int    takes_arguments(t_datas *datas, int argc, char **argv)
+int    parsing(t_datas *datas, int argc, char **argv)
 {
     datas->philo_nb = ft_atoi(argv[1]);
-    datas->death_time = ft_atoi(argv[2]);
-    datas->eat_time = ft_atoi(argv[3]);
-    datas->sleep_time = ft_atoi(argv[4]);
-    if (datas->philo_nb < 2 || datas->death_time < 0 || datas->eat_time < 0 || datas->sleep_time < 0)
+    datas->philos = malloc(sizeof(t_philosopher *) * datas->philo_nb); //??
+    if (!datas->philos)
+        return (0);
+    datas->t_t_die = ft_atoi(argv[2]);
+    datas->t_t_eat = ft_atoi(argv[3]);
+    datas->t_t_sleep = ft_atoi(argv[4]);
+    datas->death = 0;
+    if (datas->philo_nb < 2 || datas->t_t_die < 0 || datas->t_t_eat < 0 || datas->t_t_sleep < 0)
+        return (0);
+    datas->forks = malloc(sizeof(pthread_mutex_t *) * datas->philo_nb); //
+    if (!datas->forks)
         return (0);
     if (argc == 6)
     {
@@ -31,36 +38,43 @@ int    takes_arguments(t_datas *datas, int argc, char **argv)
     return (1);
 }
 
-/*
-Cette fonction sera appelée pour chaque thread créé
-*/
+/*insérer temps en ms et le mettre à jour avec chaque action*/
 void    *routine_philo(t_datas *datas)
 {
-    /*mange, dors et pense*/
-    pthread_mutex_lock(&datas->philosopher->left_fork);
-    pthread_mutex_lock(&datas->philosopher->right_fork);
-    printf("init philo\n");
-    usleep(3);
-    printf("ending thread\n");
-    /*modification des valeurs*/
-    pthread_mutex_unlock(&datas->philosopher->left_fork);
-    pthread_mutex_unlock(&datas->philosopher->right_fork);
+    int pos;
+    pos = datas->is_eating;
+    if (datas->philos->position % 2)
+        usleep();
+    /*mange*/
+    pthread_mutex_lock(&datas->forks[datas->philos[pos].left_fork]);
+    printf("has taken a fork\n");
+    pthread_mutex_lock(&datas->forks[datas->philos[pos].right_fork]);
+    printf("has taken a fork\n");
+    printf("%d is eating\n", pos + 1);
+    pthread_mutex_unlock(&datas->forks[datas->philos[pos].left_fork]);
+    pthread_mutex_unlock(&datas->forks[datas->philos[pos].right_fork]);
+    /* si le nombre de repas max est atteint, fin du diner*/
+
+    /*dors*/
+    /*pense*/
+    printf("%d is thinking\n", pos);
     return (NULL);
 }
 
 /*
 pthread_create créé un thread pour chaque philosopher
 pthread_join agit comme un wait
- sert à protéger les threads en cas d'erreur sir create pthread != 0
+ sert à protéger les threads en cas d'erreur si create pthread != 0
 */
-int init_philosophers(t_datas *datas)
+int start_philosophers_dining(t_datas *datas)
 {
     int i;
 
     i = 0;
     while (i < datas->philo_nb)
     {
-        if (pthread_create(&datas->philosopher[i].id, NULL, &routine_philo, NULL/*datas*//*arg de routine*/) != 0)
+        datas->is_eating = i;
+        if ((pthread_create(&datas->philos[i].id, NULL, &routine_philo, &datas)) != 0)
                 return (0);
         i++;
     }
@@ -68,32 +82,50 @@ int init_philosophers(t_datas *datas)
     i = 0;
     while (i < datas->philo_nb)
     {
-        if (pthread_join(datas->philosopher[i].id, NULL) != 0)
+        if (pthread_join(datas->philos[i].id, NULL) != 0)
             return (0);
         i++;
     }
     return (1);
 }
 
-int init_mutex(t_datas *datas)
+int init_philos_and_mutexes(t_datas *datas)
 {
-    pthread_mutex_t mutex;
-    
-    pthread_mutex_init(&mutex, NULL);
-    pthread_mutex_destroy(&mutex);
+    int i;
+
+    i = 0;
+    while (i < datas->philo_nb)
+    {
+        datas->philos[i].position = i;
+        if (i == 0)
+            datas->philos[i].left_fork = datas->philo_nb - 1;
+        else
+            datas->philos[i].left_fork = i;
+        if(i == (datas->philo_nb - 1))
+            datas->philos[i].right_fork = 0;
+        else
+            datas->philos[i].right_fork = i + 1;
+        if ((pthread_mutex_init(&datas->philos[i].meal, NULL) != 0))
+            return (0);
+        if ((pthread_mutex_init(&datas->forks[i], NULL) != 0))
+            return (0);
+        i++;
+    }
+    return (1);
 }
 
 int main(int argc, char **argv)
 {
     t_datas datas;
     
-    //memset();
+    memset(&datas, 0, sizeof(t_datas));
     if (argc != 5 && argc != 6)
         return (error_management(&datas, 1));
-    if (!(takes_arguments(&datas, argc, argv)))
+    if (!(parsing(&datas, argc, argv)))
         return (error_management(&datas, 2));
-    if (!(init_philosophers(&datas)))
+    if (!(init_philos_and_mutexes(&datas)))
         return (error_management(&datas, 3));
-    //init philo thread and mutex on forks
+    if (!(start_philosophers_dining(&datas)))
+        return (error_management(&datas, 4));
     return (0);
 }
