@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:02:24 by salimon           #+#    #+#             */
-/*   Updated: 2022/06/29 12:46:09 by salimon          ###   ########.fr       */
+/*   Updated: 2022/07/06 20:50:04 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,12 @@ int	ft_atoi(const char *nb)
 	while (nb[i] >= '0' && nb[i] <= '9')
 		nmb = nmb * 10 + nb[i++] - '0';
 	return (nmb * signe);
+}
+
+long int	get_time()
+{
+	struct timeval current_time;
+	gettimeofday(&current_time, NULL);
+	printf("seconds : %ld\nmicroseconds : %ld\n", current_time.tv_sec, current_time.tv_usec);
+	return (0);
 }

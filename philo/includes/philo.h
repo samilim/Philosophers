@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:20:36 by salimon           #+#    #+#             */
-/*   Updated: 2022/07/06 17:23:33 by salimon          ###   ########.fr       */
+/*   Updated: 2022/07/06 20:40:47 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <string.h>
 #include <pthread.h>
 #include <semaphore.h>
+#include <sys/time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -26,7 +27,6 @@
 
 typedef struct	s_philosopher
 {
-	int				position;
 	pthread_t		id;
 	int				left_fork;
 	int				right_fork;
@@ -42,13 +42,14 @@ typedef struct s_datas
 	int				t_t_sleep;
 	int				t_t_eat;
 	int				t_t_die;
-	int				is_eating;
+	int				is_eating; //mutex?
 	int				meal_nb;
 	int				death;
-	long			time;
+	long int		time;
 }				t_datas;
 
 int error_management(t_datas *datas, unsigned int error_code);
 int	ft_atoi(const char *nb);
+long int	get_time();
 
 #endif
