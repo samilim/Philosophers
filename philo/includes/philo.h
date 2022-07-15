@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:20:36 by salimon           #+#    #+#             */
-/*   Updated: 2022/07/06 20:40:47 by salimon          ###   ########.fr       */
+/*   Updated: 2022/07/15 02:28:00 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,26 @@
 typedef struct	s_philosopher
 {
 	pthread_t		id;
+	int				position;
 	int				left_fork;
 	int				right_fork;
 	pthread_mutex_t meal;
-
+	struct s_datas	*datas;
 }				t_philosopher;
 
 typedef struct s_datas
 {
 	int				philo_nb;
-	t_philosopher	*philos;
-	pthread_mutex_t	*forks;
 	int				t_t_sleep;
 	int				t_t_eat;
 	int				t_t_die;
 	int				is_eating; //mutex?
 	int				meal_nb;
 	int				death;
-	long int		time;
+	long int		timestamp;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	logs;
+	t_philosopher	*philos;
 }				t_datas;
 
 int error_management(t_datas *datas, unsigned int error_code);

@@ -31,8 +31,11 @@ Avec les threads, les données utilisent la même mémoire, ce qui veut dire que
 Quand une variable est modifiée simultanément dans plusieurs threads, cela peut créer un conflit qu'on appelle "Race condition". Pour éviter le problème nous utilisons alors des "mutex".
 
 ### Mutex
-Un mutex permet de protéger un espace mémoire en "bloquant" une section de la mémoire, jusqu'a ce que cet espace soit débloqué
+Un mutex permet de protéger un espace mémoire en "bloquant" une section de la mémoire, jusqu'a ce que cet espace soit débloqué, ce qui veut dire que les autres thread attendront que la ressource soit débloquée pour continuer.
 Concrètement dans ce projet, les mutex vont permettre d'empêcher les philosophes de dupliquer les fourchettes.
+
+### Deadlocks
+Un deadlock survient quand plusieurs thread essaient de locker un même mutex en même temps.
 
 ### Semaphores
 A voir plus tard pour les bonus (voir codevault)
