@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2022/07/15 02:28:10 by salimon          ###   ########.fr       */
+/*   Updated: 2022/07/24 11:15:13 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void    *routine_philo(void *philo_void)
     printf("test id philo = %d\n", philo->position);
     //pthread_mutex_unlock(&mutex);
     /*mange*/
+    print_log(philo->datas, philo->position + 1, "has taken a fork\n");
 
     //pthread_mutex_lock(&(philo->datas->forks[philo->left_fork]));
     //pthread_mutex_unlock(&(philo->datas->forks[philo->left_fork]));

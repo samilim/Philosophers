@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:02:24 by salimon           #+#    #+#             */
-/*   Updated: 2022/07/15 02:27:53 by salimon          ###   ########.fr       */
+/*   Updated: 2022/07/24 11:12:44 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ long int	get_time()
 	struct timeval current_time;
 	
 	gettimeofday(&current_time, NULL);
-	printf("seconds : %ld\nmicroseconds : %ld\n", current_time.tv_sec, current_time.tv_usec);
-	return (0);
+	//printf("seconds : %ld\nmicroseconds : %ld\n", current_time.tv_sec * 1000 , current_time.tv_usec / 1000);
+	return ((current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
 }
 
-void	print_logs(t_datas *datas, int philo, char *message)
+void	print_log(t_datas *datas, int philo, char *message)
 {
 	pthread_mutex_lock(&datas->logs);
 	/*voir condition print ; ne pas print si philo mort?*/
-	printf("%lld %d %s\n", datas->timestamp, philo, message);
+	printf("%ld %d %s\n", datas->timestamp, philo, message);
 	pthread_mutex_unlock(&datas->logs);
 }
