@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:20:36 by salimon           #+#    #+#             */
-/*   Updated: 2022/07/24 11:13:09 by salimon          ###   ########.fr       */
+/*   Updated: 2022/08/09 23:32:13 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ typedef struct s_datas
 int 		error_management(t_datas *datas, unsigned int error_code);
 int			ft_atoi(const char *nb);
 long int	get_time();
-void		print_log(t_datas *datas, int philo, char *message);
+void		print_log(t_philosopher *philo, int id, char *message);
 
 #endif

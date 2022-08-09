@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2022/07/24 11:15:13 by salimon          ###   ########.fr       */
+/*   Updated: 2022/08/09 23:47:48 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ void    *routine_philo(void *philo_void)
     //pthread_mutex_lock(&mutex);
     
     if (!((philo->position + 1) % 2)) //si le philo est pair sleep pour que les philos qui ne sont pas concernés prennent leur fourchettes
-        usleep(800000);
-    printf("test id philo = %d\n", philo->position);
-    //pthread_mutex_unlock(&mutex);
-    /*mange*/
-    print_log(philo->datas, philo->position + 1, "has taken a fork\n");
+         usleep(800000);
+    printf("test id philo = %d\n", philo->position + 1);
+    // //pthread_mutex_unlock(&mutex);
+    // /*mange*/
+    print_log(philo, philo->position + 1, "has taken a fork\n");
 
-    //pthread_mutex_lock(&(philo->datas->forks[philo->left_fork]));
+    pthread_mutex_lock(&(philo->datas->forks[philo->left_fork]));
     //pthread_mutex_unlock(&(philo->datas->forks[philo->left_fork]));
     // printf("%d has taken a fork\n", philo->position + 1);
     // pthread_mutex_lock(&philo->datas->forks[philo->datas->philos[philo->position].right_fork]);
@@ -126,8 +126,10 @@ int init_philos_and_forks(t_datas *datas)
     i = 0;
     while (i < datas->philo_nb)
     {
+        //memset(&datas->philos[i], 0, sizeof(t_philosopher));
         datas->philos[i].position = i;
         datas->philos[i].left_fork = i;
+        datas->philos[i].datas = datas;
         datas->philos[i].right_fork = (i + 1) % datas->philo_nb;
         if ((pthread_mutex_init(&datas->philos[i].meal, NULL) != 0))
             return (0);

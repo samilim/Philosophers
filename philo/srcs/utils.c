@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:02:24 by salimon           #+#    #+#             */
-/*   Updated: 2022/07/24 11:12:44 by salimon          ###   ########.fr       */
+/*   Updated: 2022/08/09 23:44:03 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ long int	get_time()
 	return ((current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
 }
 
-void	print_log(t_datas *datas, int philo, char *message)
+void	print_log(t_philosopher *philo, int id, char *message)
 {
-	pthread_mutex_lock(&datas->logs);
+	pthread_mutex_lock(&philo->datas->logs);
 	/*voir condition print ; ne pas print si philo mort?*/
-	printf("%ld %d %s\n", datas->timestamp, philo, message);
-	pthread_mutex_unlock(&datas->logs);
+	printf("%ld %d %s\n", philo->datas->timestamp, id, message);
+	pthread_mutex_unlock(&philo->datas->logs);
 }
