@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2022/08/09 23:47:48 by salimon          ###   ########.fr       */
+/*   Updated: 2022/08/10 07:43:48 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int    parsing(t_datas *datas, int argc, char **argv)
     }
     else
         datas->meal_nb = -1;
-    printf("parsing ok\n");
     return (1);
 }
 
@@ -46,37 +45,25 @@ execute la routine de chaque philo
 insérer temps en ms et le mettre à jour avec chaque action*/
 void    *routine_philo(void *philo_void)
 {
-    //(void)philo_void;
     t_philosopher *philo;
     // int pos;
 
     philo = (t_philosopher *)philo_void;
-    //(void)philo;
     //pthread_mutex_lock(&mutex);
     
     if (!((philo->position + 1) % 2)) //si le philo est pair sleep pour que les philos qui ne sont pas concernés prennent leur fourchettes
          usleep(800000);
-    printf("test id philo = %d\n", philo->position + 1);
     // //pthread_mutex_unlock(&mutex);
     // /*mange*/
-    print_log(philo, philo->position + 1, "has taken a fork\n");
 
-    pthread_mutex_lock(&(philo->datas->forks[philo->left_fork]));
+    //pthread_mutex_lock(&(philo->datas->forks[philo->left_fork]));
+    print_log(philo, philo->position + 1, "has taken a fork\n");
+    //pthread_mutex_lock(&(philo->datas->forks[philo->right_fork]));
+    print_log(philo, philo->position + 1, "has taken a fork\n");
     //pthread_mutex_unlock(&(philo->datas->forks[philo->left_fork]));
-    // printf("%d has taken a fork\n", philo->position + 1);
-    // pthread_mutex_lock(&philo->datas->forks[philo->datas->philos[philo->position].right_fork]);
-    // printf("%d has taken a fork\n", philo->position + 1);
-    // printf("%d is eating\n", philo->position + 1);
-    // pthread_mutex_unlock(&philo->datas->forks[philo->datas->philos[philo->position].left_fork]);
-    // pthread_mutex_unlock(&philo->datas->forks[philo->datas->philos[philo->position].right_fork]);
-    
-    // pthread_mutex_lock(&datas->forks[datas->philos[pos].left_fork]);
-    // printf("has taken a fork\n");
-    // pthread_mutex_lock(&datas->forks[datas->philos[pos].right_fork]);
-    // printf("has taken a fork\n");
-    // printf("%d is eating\n", pos + 1);
-    // pthread_mutex_unlock(&datas->forks[datas->philos[pos].left_fork]);
-    // pthread_mutex_unlock(&datas->forks[datas->philos[pos].right_fork]);
+    //pthread_mutex_unlock(&(philo->datas->forks[philo->right_fork]));
+
+    print_log(philo, philo->position + 1, "is eating");
 
     /* si le nombre de repas max est atteint, fin du diner*/
 
