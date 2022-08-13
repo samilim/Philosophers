@@ -37,6 +37,9 @@ Concrètement dans ce projet, les mutex vont permettre d'empêcher les philosoph
 ### Deadlocks
 Un deadlock survient quand plusieurs thread essaient de locker un même mutex en même temps.
 
+### Usleep
+Version microseconde de sleep. (1 microseconde = 0,001 milliseconde)
+
 ### Semaphores
 A voir plus tard pour les bonus (voir codevault)
 ______

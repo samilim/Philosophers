@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2022/08/10 07:43:48 by salimon          ###   ########.fr       */
+/*   Updated: 2022/08/13 04:50:36 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,38 +38,38 @@ int    parsing(t_datas *datas, int argc, char **argv)
     return (1);
 }
 
-
-pthread_mutex_t mutex;
 /*
 execute la routine de chaque philo
 insérer temps en ms et le mettre à jour avec chaque action*/
 void    *routine_philo(void *philo_void)
 {
     t_philosopher *philo;
+    //int meal_count;
+    long long ms;
+    
     // int pos;
 
     philo = (t_philosopher *)philo_void;
-    //pthread_mutex_lock(&mutex);
+    //meal_count = 0;
     
     if (!((philo->position + 1) % 2)) //si le philo est pair sleep pour que les philos qui ne sont pas concernés prennent leur fourchettes
-         usleep(800000);
-    // //pthread_mutex_unlock(&mutex);
+         usleep(8000);
+    philo->datas->timestamp = get_time();
+    while ((philo->datas->meal_nb == -1 || (philo->datas->meal_nb != -1 && philo->meal_count <= philo->datas->meal_nb)) && !philo->datas->death)
+    {
     // /*mange*/
-
-    //pthread_mutex_lock(&(philo->datas->forks[philo->left_fork]));
-    print_log(philo, philo->position + 1, "has taken a fork\n");
-    //pthread_mutex_lock(&(philo->datas->forks[philo->right_fork]));
-    print_log(philo, philo->position + 1, "has taken a fork\n");
-    //pthread_mutex_unlock(&(philo->datas->forks[philo->left_fork]));
-    //pthread_mutex_unlock(&(philo->datas->forks[philo->right_fork]));
-
-    print_log(philo, philo->position + 1, "is eating");
-
-    /* si le nombre de repas max est atteint, fin du diner*/
-
+        eat(philo);
+        //philo->meal_count++;
+        //printf("meal count = %d\n", philo->meal_count);
+        /* si le nombre de repas max est atteint, fin du diner*/
     /*dort*/
+        ms = get_time() - philo->datas->timestamp;
+        print_log(philo, ms, philo->position + 1, "is sleeping\n");
+        usleep(philo->datas->t_t_sleep * 1000);
+
     /*pense*/
     //printf("%d is thinking\n", pos);
+    }
     return (NULL);
 }
 
@@ -86,7 +86,7 @@ int start_philosophers_dining(t_datas *datas)
     pthread_mutex_init(&datas->logs, NULL);
 
     i = 0;
-    datas->timestamp = get_time();
+    //datas->timestamp = get_time();
     while (i < datas->philo_nb)
     {
         datas->is_eating = i;
@@ -118,6 +118,8 @@ int init_philos_and_forks(t_datas *datas)
         datas->philos[i].left_fork = i;
         datas->philos[i].datas = datas;
         datas->philos[i].right_fork = (i + 1) % datas->philo_nb;
+        datas->philos[i].last_meal = 0;
+        datas->philos[i].meal_count = 0;
         if ((pthread_mutex_init(&datas->philos[i].meal, NULL) != 0))
             return (0);
         if ((pthread_mutex_init(&datas->forks[i], NULL) != 0))

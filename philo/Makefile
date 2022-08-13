@@ -20,6 +20,7 @@ BONUS_PATH	:= bonus
 SRCS 		= srcs/philosophers.c \
 			srcs/error_management.c \
 			srcs/utils.c \
+			srcs/states.c \
 
 #SRCS_BONUS				= 
 
