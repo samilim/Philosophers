@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:02:24 by salimon           #+#    #+#             */
-/*   Updated: 2022/08/13 04:51:29 by salimon          ###   ########.fr       */
+/*   Updated: 2022/08/14 09:41:26 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ long long	get_time()
 
 void	print_log(t_philosopher *philo, long long ms, int id, char *message)
 {
+	(void)philo;
 	pthread_mutex_lock(&philo->datas->logs);
 	/*voir condition print ; ne pas print si philo mort?*/
 	printf("%lldms %d %s\n", ms, id, message);

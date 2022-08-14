@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2022/08/13 04:50:36 by salimon          ###   ########.fr       */
+/*   Updated: 2022/08/14 09:46:22 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void    *routine_philo(void *philo_void)
     //meal_count = 0;
     
     if (!((philo->position + 1) % 2)) //si le philo est pair sleep pour que les philos qui ne sont pas concernés prennent leur fourchettes
-         usleep(8000);
-    philo->datas->timestamp = get_time();
+         usleep(80000);
+    //philo->datas->timestamp = get_time();
     while ((philo->datas->meal_nb == -1 || (philo->datas->meal_nb != -1 && philo->meal_count <= philo->datas->meal_nb)) && !philo->datas->death)
     {
     // /*mange*/
@@ -86,11 +86,11 @@ int start_philosophers_dining(t_datas *datas)
     pthread_mutex_init(&datas->logs, NULL);
 
     i = 0;
-    //datas->timestamp = get_time();
+    datas->timestamp = get_time();
     while (i < datas->philo_nb)
     {
         datas->is_eating = i;
-        printf("about to create thread for philo %d\n", i + 1);
+        //printf("about to create thread for philo %d\n", i + 1);
         if ((pthread_create(&datas->philos[i].id, NULL, &routine_philo, &(datas->philos[i]))) != 0)
                 return (0);
         i++;
