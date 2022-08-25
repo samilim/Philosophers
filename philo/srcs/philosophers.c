@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2022/08/14 09:46:22 by salimon          ###   ########.fr       */
+/*   Updated: 2022/08/25 23:57:26 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int    parsing(t_datas *datas, int argc, char **argv)
     datas->t_t_eat = ft_atoi(argv[3]);
     datas->t_t_sleep = ft_atoi(argv[4]);
     datas->death = 0;
+    datas->dining_end = 0;
     if (datas->philo_nb < 2 || datas->t_t_die < 0 || datas->t_t_eat < 0 || datas->t_t_sleep < 0)
         return (0);
     datas->forks = (pthread_mutex_t *)malloc(sizeof(*(datas->forks)) * datas->philo_nb);
@@ -59,16 +60,20 @@ void    *routine_philo(void *philo_void)
     {
     // /*mange*/
         eat(philo);
+        /*verif nb de repas ici ?*/
+        /* si le nombre de repas max est atteint, fin du dine et ne plus rien print ?*/
+
         //philo->meal_count++;
         //printf("meal count = %d\n", philo->meal_count);
-        /* si le nombre de repas max est atteint, fin du diner*/
+        
     /*dort*/
         ms = get_time() - philo->datas->timestamp;
         print_log(philo, ms, philo->position + 1, "is sleeping\n");
         usleep(philo->datas->t_t_sleep * 1000);
 
     /*pense*/
-    //printf("%d is thinking\n", pos);
+        ms = get_time() - philo->datas->timestamp;
+        print_log(philo, ms, philo->position + 1, "is thinking\n");
     }
     return (NULL);
 }
@@ -81,21 +86,22 @@ pthread_join agit comme un wait
 int start_philosophers_dining(t_datas *datas)
 {
     int i;
-    pthread_mutex_t mutex;
-    pthread_mutex_init(&mutex, NULL);
-    pthread_mutex_init(&datas->logs, NULL);
+    //pthread_mutex_t mutex;
+    //pthread_mutex_init(&mutex, NULL);
 
     i = 0;
     datas->timestamp = get_time();
     while (i < datas->philo_nb)
     {
         datas->is_eating = i;
-        //printf("about to create thread for philo %d\n", i + 1);
         if ((pthread_create(&datas->philos[i].id, NULL, &routine_philo, &(datas->philos[i]))) != 0)
                 return (0);
         i++;
     }
     //pthread_detach(datas->philosopher[i].id);
+
+    /*verif mort avant join ??*/
+
     i = 0;
     while (i < datas->philo_nb)
     {
@@ -111,22 +117,24 @@ int init_philos_and_forks(t_datas *datas)
     int i;
 
     i = 0;
+    if ((pthread_mutex_init(&datas->meal, NULL) != 0))
+            return (0);
+    if ((pthread_mutex_init(&datas->logs, NULL) != 0))
+        return (0);
     while (i < datas->philo_nb)
     {
         //memset(&datas->philos[i], 0, sizeof(t_philosopher));
+        datas->philos[i].datas = datas;
         datas->philos[i].position = i;
         datas->philos[i].left_fork = i;
-        datas->philos[i].datas = datas;
         datas->philos[i].right_fork = (i + 1) % datas->philo_nb;
         datas->philos[i].last_meal = 0;
         datas->philos[i].meal_count = 0;
-        if ((pthread_mutex_init(&datas->philos[i].meal, NULL) != 0))
-            return (0);
         if ((pthread_mutex_init(&datas->forks[i], NULL) != 0))
             return (0);
         i++;
     }
-    printf("init philos and forks ok\n");
+    //printf("init philos and forks ok\n");
     return (1);
 }
 
@@ -143,5 +151,7 @@ int main(int argc, char **argv)
         return (error_management(&datas, 3));
     if (!(start_philosophers_dining(&datas)))
         return (error_management(&datas, 4));
+    /*check death ici ??*/
+    /*clear*/
     return (0);
 }

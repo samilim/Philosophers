@@ -22,6 +22,11 @@ ______
 Chaque philosopher doit être représenté par un thread.
 pthread_detach permet de "détacher" un thread du thread principal. Un thread détaché n'est plus joinable. AUssi, ils clear automatiquement leurs ressources.
 
+## Fonctions
+
+- pthread join 
+- pthread detach 
+
 ### Difference between thread and process
 PLusieurs threads peuvent être contenus dans un seul process, l'inverse est impossible.
 Avec les process, on duplique les données lors de la creation de child process. On obtient alors des "variables" individuelles. 
@@ -46,6 +51,10 @@ ______
 
 ## WARNINGS
 Libft non autorisée ! Ne pas oublier de déplacer les fonctions utlisées hors du dossier libft (voir sujet pour connaitre les fonctions autorisées).
+
+???
+COntinuer la routine une fois le nb de repas max atteint ?
+Verif mort avant join ou creer un thread parallèle ?
 
 ## Ressources intéressantes
 chaine ytb CodeVault
