@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 03:41:40 by salimon           #+#    #+#             */
-/*   Updated: 2022/08/25 16:24:10 by salimon          ###   ########.fr       */
+/*   Updated: 2022/09/04 04:43:51 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void    eat(t_philosopher *philo)
     print_log(philo, ms, philo->position + 1, "has taken a fork\n");
     pthread_mutex_lock(&(philo->datas->forks[philo->right_fork]));
     print_log(philo, ms, philo->position + 1, "has taken a fork\n");
+
 
     philo->last_meal = meal_time;
     

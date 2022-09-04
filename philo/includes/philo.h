@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:20:36 by salimon           #+#    #+#             */
-/*   Updated: 2022/08/25 16:05:30 by salimon          ###   ########.fr       */
+/*   Updated: 2022/09/04 07:46:11 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct	s_philosopher
 	int				right_fork;
 	int				meal_count;
 	long long		last_meal;
-	struct s_datas	*datas; //ou pas
+	struct s_datas	*datas;
 }				t_philosopher;
 
 typedef struct s_datas
@@ -46,7 +46,7 @@ typedef struct s_datas
 	int				meal_nb;
 	/*flags*/
 	int				death;
-	int				dining_end; /*?*/
+	int				dining_end;
 	
 	long long		timestamp; /*temps de départ*/
 	/*mutexes*/
@@ -61,5 +61,7 @@ int			ft_atoi(const char *nb);
 long long	get_time();
 void		print_log(t_philosopher *philo, long long ms, int id, char *message);
 void   		eat(t_philosopher *philo);
+int			check_death(t_datas *datas);
+void		ft_clear(t_datas *datas);
 
 #endif

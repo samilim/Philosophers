@@ -24,8 +24,9 @@ pthread_detach permet de "détacher" un thread du thread principal. Un thread d�
 
 ## Fonctions
 
-- pthread join 
-- pthread detach 
+- pthread join : permet de s'assurer que le main thread ne se termine pas avant les threads parallèles
+- pthread detachi
+VOir video de udacity 
 
 ### Difference between thread and process
 PLusieurs threads peuvent être contenus dans un seul process, l'inverse est impossible.
@@ -52,7 +53,8 @@ ______
 ## WARNINGS
 Libft non autorisée ! Ne pas oublier de déplacer les fonctions utlisées hors du dossier libft (voir sujet pour connaitre les fonctions autorisées).
 
-???
+QUESTIONS
+Pourquoi / dans quel cas utiliser detach plutot que join ? 
 COntinuer la routine une fois le nb de repas max atteint ?
 Verif mort avant join ou creer un thread parallèle ?
 

@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2022/08/25 23:57:26 by salimon          ###   ########.fr       */
+/*   Updated: 2022/09/04 07:58:25 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ pthread_join agit comme un wait
 int start_philosophers_dining(t_datas *datas)
 {
     int i;
-    //pthread_mutex_t mutex;
-    //pthread_mutex_init(&mutex, NULL);
 
     i = 0;
     datas->timestamp = get_time();
@@ -101,7 +99,8 @@ int start_philosophers_dining(t_datas *datas)
     //pthread_detach(datas->philosopher[i].id);
 
     /*verif mort avant join ??*/
-
+    //check_death(datas);
+    
     i = 0;
     while (i < datas->philo_nb)
     {
@@ -134,7 +133,6 @@ int init_philos_and_forks(t_datas *datas)
             return (0);
         i++;
     }
-    //printf("init philos and forks ok\n");
     return (1);
 }
 
@@ -152,6 +150,6 @@ int main(int argc, char **argv)
     if (!(start_philosophers_dining(&datas)))
         return (error_management(&datas, 4));
     /*check death ici ??*/
-    /*clear*/
+    ft_clear(&datas);
     return (0);
 }

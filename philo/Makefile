@@ -21,6 +21,8 @@ SRCS 		= srcs/philosophers.c \
 			srcs/error_management.c \
 			srcs/utils.c \
 			srcs/states.c \
+			srcs/stop.c \
+			srcs/clear.c \
 
 #SRCS_BONUS				= 
 
@@ -43,7 +45,7 @@ $(LIBFT_LIB):
 
 $(NAME):	$(OBJS)
 			$(CC) $(OBJS) $(LIBFT_LNK) -o $(NAME)
-#			@echo -e ${GREEN}You can enter the parameter in two different manners \; one unique str that contains all numbers \"nb1 nb2 nb3\", or directly enter each number as argument, like stated in the new subject.${NONE}
+#			@echo -e ${GREEN}Arguments : [Nb of philosophers] [Time to die] [Time to eat] [Time to sleep] (optionnal)[Nb max of meals]${NONE}
 
 bonus:		$(LIBFT_LIB) $(OBJS_BONUS)
 			$(CC) $(OBJS_BONUS) $(LIBFT_LNK) -o $(NAME)
