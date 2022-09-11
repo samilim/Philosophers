@@ -8,7 +8,7 @@ NONE		='\033[0m'
 # comp
 NAME		= philo
 CC			= gcc
-CFLAGS		= -pthread -Wall -Werror -Wextra
+CFLAGS		= -Wall -Werror -Wextra
 AR 			= ar rcs
 RM			= rm -f
 
@@ -26,37 +26,26 @@ SRCS 		= srcs/philosophers.c \
 
 #SRCS_BONUS				= 
 
-# libft
-LIBFT_PATH	:= libft/
-LIBFT_LIB	= $(addprefix $(LIBFT_PATH),libft.a)
-LIBFT_INC	= -I ./libft
-LIBFT_LNK	= -L ./libft -l ft -l pthread
-
 OBJS		= $(SRCS:.c=.o)
 OBJS_BONUS	= $(SRCS_BONUS:.c=.o)
 
-all:		$(LIBFT_LIB) $(NAME)
+all:		$(NAME)
 
 %.o: %.c	$(SRCS_PATH)/%.c
-			$(CC) $(CFLAGS) $(LIBFT_INC) -I $(INC_PATH) -o $@ -c $<
-
-$(LIBFT_LIB):
-	@make -C $(LIBFT_PATH)
+			$(CC) $(CFLAGS) -I $(INC_PATH) -o $@ -c $<
 
 $(NAME):	$(OBJS)
-			$(CC) $(OBJS) $(LIBFT_LNK) -o $(NAME)
+			$(CC) $(OBJS) -o $(NAME) -lpthread
 #			@echo -e ${GREEN}Arguments : [Nb of philosophers] [Time to die] [Time to eat] [Time to sleep] (optionnal)[Nb max of meals]${NONE}
 
-bonus:		$(LIBFT_LIB) $(OBJS_BONUS)
-			$(CC) $(OBJS_BONUS) $(LIBFT_LNK) -o $(NAME)
+bonus:		$(OBJS_BONUS)
+			$(CC) $(OBJS_BONUS) -o $(NAME)
 
 clean:
 			$(RM) $(OBJS) $(OBJS_BONUS)
-			make -C $(LIBFT_PATH) clean
 
 fclean:		clean
 			$(RM) $(NAME)
-			make -C $(LIBFT_PATH) fclean
 
 re:			fclean all
 
