@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2022/09/18 14:47:27 by salimon          ###   ########.fr       */
+/*   Updated: 2022/09/18 15:24:04 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void    *routine_philo(void *philo_void)
     
     if (!((philo->position + 1) % 2))
          usleep(800);
-    philo->last_meal = philo->datas->timestamp;
+    //philo->last_meal = philo->datas->timestamp;
 
     while (!philo->datas->death)
     {
