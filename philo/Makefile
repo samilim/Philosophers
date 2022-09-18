@@ -22,7 +22,6 @@ SRCS 		= srcs/philosophers.c \
 			srcs/utils.c \
 			srcs/states.c \
 			srcs/stop.c \
-			srcs/clear.c \
 
 #SRCS_BONUS				= 
 

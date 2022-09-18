@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:14:22 by salimon           #+#    #+#             */
-/*   Updated: 2022/09/10 14:22:13 by salimon          ###   ########.fr       */
+/*   Updated: 2022/09/18 14:42:38 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ int error_management(t_datas *datas, unsigned int error_code)
 		free(datas->philos);
 	if (datas->forks)
 		free(datas->forks);
+	/*delete mutexes ?*/
 	return (0);
 }

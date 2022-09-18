@@ -6,11 +6,27 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:02:24 by salimon           #+#    #+#             */
-/*   Updated: 2022/08/25 15:51:56 by salimon          ###   ########.fr       */
+/*   Updated: 2022/09/18 14:43:55 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+void ft_clear(t_datas *datas)
+{
+	int i;
+
+	i = 0;
+	while (i < datas->philo_nb)
+	{
+		pthread_mutex_destroy(&datas->forks[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&datas->meal);
+	pthread_mutex_destroy(&datas->logs);
+	free(datas->philos);
+	free(datas->forks);
+}
 
 int	ft_atoi(const char *nb)
 {
@@ -44,9 +60,8 @@ long long	get_time()
 
 void	print_log(t_philosopher *philo, long long ms, int id, char *message)
 {
-	//(void)philo;
 	pthread_mutex_lock(&philo->datas->logs);
-	/*voir condition print ; ne pas print si philo mort?*/
-	printf("%lldms %d %s\n", ms, id, message);
+	if (!philo->datas->death)
+		printf("%lldms %d %s\n", ms, id, message);
 	pthread_mutex_unlock(&philo->datas->logs);
 }
