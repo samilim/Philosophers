@@ -6,15 +6,15 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:02:24 by salimon           #+#    #+#             */
-/*   Updated: 2022/09/18 15:32:40 by salimon          ###   ########.fr       */
+/*   Updated: 2022/09/26 00:17:00 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void ft_clear(t_datas *datas)
+void	ft_clear(t_datas *datas)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < datas->philo_nb)
@@ -28,6 +28,21 @@ void ft_clear(t_datas *datas)
 	free(datas->forks);
 }
 
+int	smart_sleep(t_datas *datas, long long ms)
+{
+	int	time;
+
+	time = 0;
+	while (time <= ms)
+	{
+		if (datas->death)
+			return (1);
+		usleep(1000);
+		time++;
+	}
+	return (0);
+}
+
 int	ft_atoi(const char *nb)
 {
 	unsigned int	i;
@@ -39,7 +54,7 @@ int	ft_atoi(const char *nb)
 	nmb = 0;
 	while (nb[i] == ' ' || (nb[i] >= 8 && nb[i] <= 13))
 		i++;
-	if (nb[i] == '-' || nb[i] == '+')
+	while (nb[i] == '-' || nb[i] == '+')
 	{
 		if (nb[i] == '-')
 			signe *= -1;
@@ -50,18 +65,18 @@ int	ft_atoi(const char *nb)
 	return (nmb * signe);
 }
 
-long long	get_time()
+long long	get_time(void)
 {
-	struct timeval current_time;
-	
+	struct timeval	current_time;
+
 	gettimeofday(&current_time, NULL);
 	return ((current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
 }
 
 void	print_log(t_philosopher *philo, long long ms, int id, char *message)
 {
-	//pthread_mutex_lock(&philo->datas->logs);
+	pthread_mutex_lock(&philo->datas->logs);
 	if (!philo->datas->death)
 		printf("%lldms %d %s\n", ms, id, message);
-	//pthread_mutex_unlock(&philo->datas->logs);
+	pthread_mutex_unlock(&philo->datas->logs);
 }
