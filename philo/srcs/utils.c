@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:02:24 by salimon           #+#    #+#             */
-/*   Updated: 2022/09/26 00:17:00 by salimon          ###   ########.fr       */
+/*   Updated: 2022/09/26 03:34:22 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,15 @@ void	ft_clear(t_datas *datas)
 	free(datas->forks);
 }
 
+/*permet de terminer le sleep prematurement quand une death est detectee*/
 int	smart_sleep(t_datas *datas, long long ms)
 {
 	int	time;
 
 	time = 0;
-	while (time <= ms)
+	while (time < ms)
 	{
-		if (datas->death)
+		if (datas->dining_end)
 			return (1);
 		usleep(1000);
 		time++;
@@ -76,7 +77,7 @@ long long	get_time(void)
 void	print_log(t_philosopher *philo, long long ms, int id, char *message)
 {
 	pthread_mutex_lock(&philo->datas->logs);
-	if (!philo->datas->death)
+	if (!philo->datas->dining_end)
 		printf("%lldms %d %s\n", ms, id, message);
 	pthread_mutex_unlock(&philo->datas->logs);
 }

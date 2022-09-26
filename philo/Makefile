@@ -8,7 +8,7 @@ NONE		='\033[0m'
 # comp
 NAME		= philo
 CC			= gcc
-CFLAGS		= -Wall -Werror -Wextra
+CFLAGS		= -Wall -Werror -Wextra -Wno-unused-parameter
 AR 			= ar rcs
 RM			= rm -f
 
@@ -22,6 +22,7 @@ SRCS 		= srcs/philosophers.c \
 			srcs/utils.c \
 			srcs/states.c \
 			srcs/stop.c \
+			srcs/parsing.c \
 
 #SRCS_BONUS				= 
 
@@ -35,7 +36,7 @@ all:		$(NAME)
 
 $(NAME):	$(OBJS)
 			$(CC) $(OBJS) -o $(NAME) -lpthread
-#			@echo -e ${GREEN}Arguments : [Nb of philosophers] [Time to die] [Time to eat] [Time to sleep] (optionnal)[Nb max of meals]${NONE}
+			@echo "${GREEN}Arguments : [Nb of philosophers] [Time to die] [Time to eat] [Time to sleep] (optionnal)[Nb max of meals]${NONE}"
 
 bonus:		$(OBJS_BONUS)
 			$(CC) $(OBJS_BONUS) -o $(NAME)

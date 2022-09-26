@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:20:36 by salimon           #+#    #+#             */
-/*   Updated: 2022/09/18 14:48:48 by salimon          ###   ########.fr       */
+/*   Updated: 2022/09/26 03:32:21 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+/*
+les int des forks correspondent aux emplacement
+des fourchettes dans mon tableau de forks
+*/
 typedef struct	s_philosopher
 {
 	pthread_t		id;
@@ -47,7 +51,6 @@ typedef struct s_datas
 	int				t_t_eat;
 	int				t_t_die;
 	int				meal_nb;
-	int				death;
 	int				dining_end;
 	long long		timestamp;
 	pthread_mutex_t	*forks;
@@ -57,11 +60,13 @@ typedef struct s_datas
 }				t_datas;
 
 int 		error_management(t_datas *datas, unsigned int error_code);
+int			parsing(t_datas *datas, int argc, char **argv);
 int			ft_atoi(const char *nb);
 long long	get_time();
 void		print_log(t_philosopher *philo, long long ms, int id, char *message);
 void   		eat(t_philosopher *philo);
 int			check_dining_end(t_datas *datas);
 void		ft_clear(t_datas *datas);
+int			smart_sleep(t_datas *datas, long long ms);
 
 #endif

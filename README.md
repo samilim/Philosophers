@@ -53,10 +53,8 @@ ______
 ## WARNINGS
 Libft non autorisée ! Ne pas oublier de déplacer les fonctions utlisées hors du dossier libft (voir sujet pour connaitre les fonctions autorisées).
 
-QUESTIONS
-Pourquoi / dans quel cas utiliser detach plutot que join ? 
-COntinuer la routine une fois le nb de repas max atteint ?
-Verif mort avant join ou creer un thread parallèle ?
+## Trucs en plus
+valgrind --tool=helgrind pour check les pb lies aux mutex.
 
 ## Ressources intéressantes
 chaine ytb CodeVault
