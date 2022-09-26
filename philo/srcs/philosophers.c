@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2022/09/26 03:56:02 by salimon          ###   ########.fr       */
+/*   Updated: 2022/09/26 04:52:18 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	*routine_philo(void *philo_void)
 	long long		ms;
 
 	philo = (t_philosopher *)philo_void;
+	if (philo->datas->philo_nb == 1)
+		return (one_philo_case(philo));
 	if (!((philo->position + 1) % 2))
 		usleep(100);
 	while (!philo->datas->dining_end)
