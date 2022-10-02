@@ -1,12 +1,9 @@
 -Leak sur tes thread, pense a les destroy a la fin 
-- Data race dans tes actions (go_eat ligne 36), sur ton check de mort ligne 69 
-- probleme de parssing -> ./philo 4 410a 400 200 -> pas de gestion si des lettres dans les valeurs -- ok
+- Data race dans tes actions (go_eat ligne 36), sur ton check de mort ligne 69
 
-cas 1 philo -- ok
-parsing a ameliorer (invalid si pas que chiffres) -- ok
 check si mort bien geree -- ok a priori
 
-faire boucle de sleep (ok mais pq delai ?)
+(optionnel) faire boucle de sleep (ok mais pq delai ?)
 deadocks / data race avec helgrind, a revoir
 normer
 

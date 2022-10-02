@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2022/09/26 04:52:18 by salimon          ###   ########.fr       */
+/*   Updated: 2022/10/02 12:23:20 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*routine_philo(void *philo_void)
 	if (philo->datas->philo_nb == 1)
 		return (one_philo_case(philo));
 	if (!((philo->position + 1) % 2))
-		usleep(100);
+		usleep(400);
 	while (!philo->datas->dining_end)
 	{
 		eat(philo);
@@ -34,7 +34,6 @@ void	*routine_philo(void *philo_void)
 		ms = get_time() - philo->datas->timestamp;
 		print_log(philo, ms, philo->position + 1, "is sleeping");
 		usleep(philo->datas->t_t_sleep * 1000);
-		//smart_sleep(philo->datas, philo->datas->t_t_sleep);
 		ms = get_time() - philo->datas->timestamp;
 		print_log(philo, ms, philo->position + 1, "is thinking");
 	}
