@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:02:24 by salimon           #+#    #+#             */
-/*   Updated: 2022/09/26 04:43:07 by salimon          ###   ########.fr       */
+/*   Updated: 2022/10/17 17:31:36 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	ft_clear(t_datas *datas)
 	}
 	pthread_mutex_destroy(&datas->meal);
 	pthread_mutex_destroy(&datas->logs);
+	pthread_mutex_destroy(&datas->death);
 	free(datas->philos);
 	free(datas->forks);
 }

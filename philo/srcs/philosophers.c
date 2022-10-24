@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2022/10/02 12:23:20 by salimon          ###   ########.fr       */
+/*   Updated: 2022/10/17 18:09:06 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,14 @@ void	*routine_philo(void *philo_void)
 	while (!philo->datas->dining_end)
 	{
 		eat(philo);
+		pthread_mutex_lock(&philo->datas->death);
 		if (philo->datas->dining_end || (philo->datas->meal_nb
 				!= -1 && philo->meal_count >= philo->datas->meal_nb))
+		{
+			pthread_mutex_unlock(&philo->datas->death);
 			break ;
+		}
+		pthread_mutex_unlock(&philo->datas->death);
 		ms = get_time() - philo->datas->timestamp;
 		print_log(philo, ms, philo->position + 1, "is sleeping");
 		usleep(philo->datas->t_t_sleep * 1000);
@@ -77,6 +82,8 @@ int	init_philos_and_mutexes(t_datas *datas)
 	if ((pthread_mutex_init(&datas->meal, NULL) != 0))
 		return (0);
 	if ((pthread_mutex_init(&datas->logs, NULL) != 0))
+		return (0);
+	if ((pthread_mutex_init(&datas->death, NULL) != 0))
 		return (0);
 	while (i < datas->philo_nb)
 	{

@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:20:36 by salimon           #+#    #+#             */
-/*   Updated: 2022/10/16 21:55:23 by salimon          ###   ########.fr       */
+/*   Updated: 2022/10/17 17:27:13 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_datas
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	logs;
 	pthread_mutex_t	meal;
+	pthread_mutex_t death;
 	t_philosopher	*philos;
 }				t_datas;
 
