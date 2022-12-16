@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 02:54:52 by salimon           #+#    #+#             */
-/*   Updated: 2022/09/26 03:49:37 by salimon          ###   ########.fr       */
+/*   Updated: 2022/12/16 02:27:47 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ int	check_digits(int argc, char **argv)
 	int	j;
 
 	i = 1;
+	if ((argv[1][0] == '\0') || (argv[2][0] == '\0') 
+		|| (argv[3][0] == '\0') || (argv [4][0] == '\0'))
+		return (0);
+	if (argc == 6 && argv[5][0] == '\0')
+		return (0);
 	while (i < argc)
 	{
 		j = 0;
@@ -50,8 +55,8 @@ int	parsing(t_datas *datas, int argc, char **argv)
 	datas->t_t_eat = ft_atoi(argv[3]);
 	datas->t_t_sleep = ft_atoi(argv[4]);
 	datas->dining_end = 0;
-	if (datas->philo_nb < 1 || datas->t_t_die < 0
-		|| datas->t_t_eat < 0 || datas->t_t_sleep < 0)
+	if (datas->philo_nb < 1 || datas->philo_nb > 1000
+		|| datas->t_t_die < 0 || datas->t_t_eat < 0 || datas->t_t_sleep < 0)
 		return (0);
 	if (argc == 6)
 	{
