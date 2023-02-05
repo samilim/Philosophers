@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:14:22 by salimon           #+#    #+#             */
-/*   Updated: 2022/09/26 03:35:48 by salimon          ###   ########.fr       */
+/*   Updated: 2023/01/15 02:53:16 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ int	error_management(t_datas *datas, unsigned int error_code)
 		write (STDERR_FILENO, "Error while initializing mutexes\n", 34);
 	if (error_code == 4)
 		write (STDERR_FILENO, "Error during thread processing\n", 32);
-	if (datas->philos)
-		free(datas->philos);
-	if (datas->forks)
-		free(datas->forks);
+	ft_clear(datas);
 	return (0);
 }

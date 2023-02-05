@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2022/10/17 18:09:06 by salimon          ###   ########.fr       */
+/*   Updated: 2023/01/15 04:29:48 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,18 @@ void	*routine_philo(void *philo_void)
 		return (one_philo_case(philo));
 	if (!((philo->position + 1) % 2))
 		usleep(400);
-	while (!philo->datas->dining_end)
+	while (1)
 	{
-		eat(philo);
-		pthread_mutex_lock(&philo->datas->death);
+		pthread_mutex_lock(&philo->datas->meal);
 		if (philo->datas->dining_end || (philo->datas->meal_nb
 				!= -1 && philo->meal_count >= philo->datas->meal_nb))
 		{
-			pthread_mutex_unlock(&philo->datas->death);
+			pthread_mutex_unlock(&philo->datas->meal);
 			break ;
 		}
-		pthread_mutex_unlock(&philo->datas->death);
+		philo->meal_count++;
+		pthread_mutex_unlock(&philo->datas->meal);
+		eat(philo);
 		ms = get_time() - philo->datas->timestamp;
 		print_log(philo, ms, philo->position + 1, "is sleeping");
 		usleep(philo->datas->t_t_sleep * 1000);
@@ -44,6 +45,38 @@ void	*routine_philo(void *philo_void)
 	}
 	return (NULL);
 }
+
+
+// void	*routine_philo(void *philo_void)
+// {
+// 	t_philosopher	*philo;
+// 	long long		ms;
+
+// 	philo = (t_philosopher *)philo_void;
+// 	if (philo->datas->philo_nb == 1)
+// 		return (one_philo_case(philo));
+// 	if (!((philo->position + 1) % 2))
+// 		usleep(400);
+// 	while (!philo->datas->dining_end)
+// 	{
+		
+// 		pthread_mutex_lock(&philo->datas->meal);
+// 		if (philo->datas->dining_end || (philo->datas->meal_nb
+// 				!= -1 && philo->meal_count >= philo->datas->meal_nb))
+// 		{
+// 			pthread_mutex_unlock(&philo->datas->meal);
+// 			break ;
+// 		}
+// 		pthread_mutex_unlock(&philo->datas->meal);
+// 		eat(philo);
+// 		ms = get_time() - philo->datas->timestamp;
+// 		print_log(philo, ms, philo->position + 1, "is sleeping");
+// 		usleep(philo->datas->t_t_sleep * 1000);
+// 		ms = get_time() - philo->datas->timestamp;
+// 		print_log(philo, ms, philo->position + 1, "is thinking");
+// 	}
+// 	return (NULL);
+// }
 
 /*
 pthread_create créé un thread pour chaque philosopher.
