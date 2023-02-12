@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 01:10:08 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/12 05:29:50 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/12 06:15:16 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,26 +46,30 @@ int	check_death(t_datas *datas)
 {
 	int			i;
 
-	while (datas->philo_nb > 1 && !datas->dining_end)
+	while (datas->philo_nb > 1/* && !datas->dining_end*/)
 	{
+		printf("CHECKDEATHHELLOOO???\n");
 		i = 0;
 		while (i < datas->philo_nb)
 		{
-			printf("checkdeath\n");
+			//printf("checkdeath\n");
+			usleep(100);
 			pthread_mutex_lock(&datas->death);
-			//printf("death time = %lld\n", datas->philos[i].meal_time - datas->philos[i].last_meal);
-			if ((datas->philos[i].meal_time
-					- datas->philos[i].last_meal) > datas->t_t_die)
+			printf("last_meal = %lld\n", datas->philos[i].last_meal);
+			printf("death time = %lld\n", datas->philos[i].last_meal - get_time());
+			if ((datas->philos[i].last_meal - get_time()) > datas->t_t_die)
 			{
 				printf("mort found\n");
-				print_log(datas->philos, i + 1, "died");
 				datas->dining_end = 1;
+				print_log(datas->philos, i + 1, "died");
 				pthread_mutex_unlock(&datas->death);
-				usleep(1000);
+				//usleep(100);
 				return (1);
 			}
+			printf("i++\n");
 			i++;
 		}
 	}
+	printf("sort de checkdeath\n");
 	return (1);
 }
