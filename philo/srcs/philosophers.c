@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/12 04:29:08 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/12 05:16:05 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,25 @@ void	*routine_philo(void *philo_void)
 		return (one_philo_case(philo));
 	if (!((philo->position + 1) % 2))
 		usleep(400);
-	while (!philo->datas->dining_end)
+	while (1)
 	{
 		pthread_mutex_lock(&philo->datas->meal);
-		if ((philo->datas->meal_nb
+		if (philo->datas->dining_end || (philo->datas->meal_nb
 				!= -1 && philo->meal_count >= philo->datas->meal_nb)) //si nb de rapas atteint pour ce philo, sortie de la routine
 		{
 			pthread_mutex_unlock(&philo->datas->meal);
 			break ;
 		}
 		philo->meal_count++;
+		write(1, "will enter eat\n", 15);
 		eat(philo);
+		write(1, "sorti de eat\n", 14);;
 		ms = get_time() - philo->datas->timestamp;
 		print_log(philo, ms, philo->position + 1, "is sleeping");
 		usleep(philo->datas->t_t_sleep * 1000);
 		ms = get_time() - philo->datas->timestamp;
 		print_log(philo, ms, philo->position + 1, "is thinking");
+		write(1, "fin de routine\n", 16);
 	}
 	return (NULL);
 }
@@ -148,6 +151,7 @@ int	start_philosophers_dining(t_datas *datas)
 		if ((pthread_create(&datas->philos[i].id, NULL,
 					&routine_philo, &(datas->philos[i]))) != 0)
 			return (0);
+		datas->philos[i].last_meal = datas->timestamp;//
 		i++;
 	}
 	check_death(datas);

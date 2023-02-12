@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 01:10:08 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/12 04:13:43 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/12 05:11:27 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,14 @@ int	check_death(t_datas *datas)
 	int			i;
 	long long	ms;
 
-	while (!datas->dining_end)
+	while (datas->philo_nb > 1 && !datas->dining_end)
 	{
 		i = 0;
 		while (i < datas->philo_nb)
 		{
 			printf("checkdeath\n");
 			pthread_mutex_lock(&datas->death);
+			printf("death time = %lld\n", datas->philos[i].meal_time - datas->philos[i].last_meal);
 			if ((datas->philos[i].meal_time
 					- datas->philos[i].last_meal) > datas->t_t_die)
 			{
@@ -62,7 +63,7 @@ int	check_death(t_datas *datas)
 				print_log(datas->philos, ms, i + 1, "died");
 				datas->dining_end = 1;
 				pthread_mutex_unlock(&datas->death);
-				//minisleep pour eviter erreurs de synchro?
+				usleep(1000);
 				return (1);
 			}
 			i++;
