@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/12 05:16:05 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/12 05:27:07 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ insérer temps en ms et le mettre à jour avec chaque action*/
 void	*routine_philo(void *philo_void)
 {
 	t_philosopher	*philo;
-	long long		ms;
 
 	philo = (t_philosopher *)philo_void;
 	if (philo->datas->philo_nb == 1)
@@ -38,11 +37,9 @@ void	*routine_philo(void *philo_void)
 		write(1, "will enter eat\n", 15);
 		eat(philo);
 		write(1, "sorti de eat\n", 14);;
-		ms = get_time() - philo->datas->timestamp;
-		print_log(philo, ms, philo->position + 1, "is sleeping");
+		print_log(philo, philo->position + 1, "is sleeping");
 		usleep(philo->datas->t_t_sleep * 1000);
-		ms = get_time() - philo->datas->timestamp;
-		print_log(philo, ms, philo->position + 1, "is thinking");
+		print_log(philo, philo->position + 1, "is thinking");
 		write(1, "fin de routine\n", 16);
 	}
 	return (NULL);

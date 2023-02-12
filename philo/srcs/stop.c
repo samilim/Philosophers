@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 01:10:08 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/12 05:11:27 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/12 05:29:50 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ est-ce aue je dois check le nb de repqs dqns cette meme fonction ?*/
 int	check_death(t_datas *datas)
 {
 	int			i;
-	long long	ms;
 
 	while (datas->philo_nb > 1 && !datas->dining_end)
 	{
@@ -54,13 +53,12 @@ int	check_death(t_datas *datas)
 		{
 			printf("checkdeath\n");
 			pthread_mutex_lock(&datas->death);
-			printf("death time = %lld\n", datas->philos[i].meal_time - datas->philos[i].last_meal);
+			//printf("death time = %lld\n", datas->philos[i].meal_time - datas->philos[i].last_meal);
 			if ((datas->philos[i].meal_time
 					- datas->philos[i].last_meal) > datas->t_t_die)
 			{
 				printf("mort found\n");
-				ms = get_time() - datas->timestamp;
-				print_log(datas->philos, ms, i + 1, "died");
+				print_log(datas->philos, i + 1, "died");
 				datas->dining_end = 1;
 				pthread_mutex_unlock(&datas->death);
 				usleep(1000);
