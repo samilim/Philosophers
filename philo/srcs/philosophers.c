@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2023/01/15 04:29:48 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/12 04:29:08 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,16 @@ void	*routine_philo(void *philo_void)
 		return (one_philo_case(philo));
 	if (!((philo->position + 1) % 2))
 		usleep(400);
-	while (1)
+	while (!philo->datas->dining_end)
 	{
 		pthread_mutex_lock(&philo->datas->meal);
-		if (philo->datas->dining_end || (philo->datas->meal_nb
-				!= -1 && philo->meal_count >= philo->datas->meal_nb))
+		if ((philo->datas->meal_nb
+				!= -1 && philo->meal_count >= philo->datas->meal_nb)) //si nb de rapas atteint pour ce philo, sortie de la routine
 		{
 			pthread_mutex_unlock(&philo->datas->meal);
 			break ;
 		}
 		philo->meal_count++;
-		pthread_mutex_unlock(&philo->datas->meal);
 		eat(philo);
 		ms = get_time() - philo->datas->timestamp;
 		print_log(philo, ms, philo->position + 1, "is sleeping");
@@ -45,6 +44,38 @@ void	*routine_philo(void *philo_void)
 	}
 	return (NULL);
 }
+
+//11 fev ver
+// void	*routine_philo(void *philo_void)
+// {
+// 	t_philosopher	*philo;
+// 	long long		ms;
+
+// 	philo = (t_philosopher *)philo_void;
+// 	if (philo->datas->philo_nb == 1)
+// 		return (one_philo_case(philo));
+// 	if (!((philo->position + 1) % 2))
+// 		usleep(400);
+// 	while (1)
+// 	{
+// 		pthread_mutex_lock(&philo->datas->meal);
+// 		if (philo->datas->dining_end || (philo->datas->meal_nb
+// 				!= -1 && philo->meal_count >= philo->datas->meal_nb))
+// 		{
+// 			pthread_mutex_unlock(&philo->datas->meal);
+// 			break ;
+// 		}
+// 		philo->meal_count++;
+// 		pthread_mutex_unlock(&philo->datas->meal);
+// 		eat(philo);
+// 		ms = get_time() - philo->datas->timestamp;
+// 		print_log(philo, ms, philo->position + 1, "is sleeping");
+// 		usleep(philo->datas->t_t_sleep * 1000);
+// 		ms = get_time() - philo->datas->timestamp;
+// 		print_log(philo, ms, philo->position + 1, "is thinking");
+// 	}
+// 	return (NULL);
+// }
 
 
 // void	*routine_philo(void *philo_void)
@@ -84,6 +115,28 @@ pthread_join agit comme un wait
  sert à protéger les threads en cas d'erreur si create pthread != 0.
 verif mort et dinig end avant join ?
 */
+// int	start_philosophers_dining(t_datas *datas)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	datas->timestamp = get_time();
+// 	while (i < datas->philo_nb)
+// 	{
+// 		if ((pthread_create(&datas->philos[i].id, NULL,
+// 					&routine_philo, &(datas->philos[i]))) != 0)
+// 			return (0);
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (i < datas->philo_nb)
+// 	{
+// 		if (pthread_join(datas->philos[i].id, NULL) != 0)
+// 			return (0);
+// 		i++;
+// 	}
+// 	return (1);
+// }
 int	start_philosophers_dining(t_datas *datas)
 {
 	int	i;
@@ -97,6 +150,7 @@ int	start_philosophers_dining(t_datas *datas)
 			return (0);
 		i++;
 	}
+	check_death(datas);
 	i = 0;
 	while (i < datas->philo_nb)
 	{

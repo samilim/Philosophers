@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 01:10:08 by salimon           #+#    #+#             */
-/*   Updated: 2022/09/26 03:34:02 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/12 04:13:43 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,29 @@ int	check_dining_end(t_datas *datas)
 }
 
 /*à placer probablement avant join pour check la death
-en continu ou bien créer un thread dédié en deébut de simu?*/
+en continu ou bien créer un thread dédié en deébut de simu?
+est-ce aue je dois check le nb de repqs dqns cette meme fonction ?*/
 int	check_death(t_datas *datas)
 {
 	int			i;
 	long long	ms;
 
-	while (1)
+	while (!datas->dining_end)
 	{
 		i = 0;
 		while (i < datas->philo_nb)
 		{
+			printf("checkdeath\n");
+			pthread_mutex_lock(&datas->death);
 			if ((datas->philos[i].meal_time
 					- datas->philos[i].last_meal) > datas->t_t_die)
 			{
+				printf("mort found\n");
 				ms = get_time() - datas->timestamp;
 				print_log(datas->philos, ms, i + 1, "died");
 				datas->dining_end = 1;
+				pthread_mutex_unlock(&datas->death);
+				//minisleep pour eviter erreurs de synchro?
 				return (1);
 			}
 			i++;
