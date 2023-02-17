@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/17 04:54:22 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/17 06:48:22 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	*routine_philo(void *philo_void)
 		philo->meal_count++;
 		//write(1, "sorti de eat\n", 14);;
 		print_log(philo, philo->position + 1, "is sleeping");
-		smart_sleep(philo->datas, philo->datas->t_t_sleep);
-		//usleep(philo->datas->t_t_sleep * 1000);
+		//smart_sleep(philo->datas, philo->datas->t_t_sleep);
+		usleep(philo->datas->t_t_sleep * 1000);
 		print_log(philo, philo->position + 1, "is thinking");
 		//write(1, "fin de routine\n", 16);
 	}

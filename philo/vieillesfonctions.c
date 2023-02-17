@@ -204,3 +204,20 @@ verif mort et dinig end avant join ?
 // 	pthread_mutex_unlock(&(philo->datas->forks[philo->left_fork]));
 // 	pthread_mutex_unlock(&(philo->datas->forks[philo->right_fork]));
 // }
+
+
+/*BULLSHIT
+void	die(t_philosopher *philo)
+{
+	int ms;
+	//print_log(philo, philo->position + 1, "died");
+	ms = get_time() - philo->datas->timestamp;
+	printf("%dms %d %s\n", ms, id, message);
+	pthread_mutex_lock(&philo->datas->death);
+	//pthread_mutex_unlock(&(philo->datas->forks[philo->left_fork]));
+	//pthread_mutex_unlock(&(philo->datas->forks[philo->right_fork]));
+	philo->datas->dining_end = 1;
+	pthread_mutex_unlock(&philo->datas->death);
+	return ;
+}
+*/

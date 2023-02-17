@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 01:10:08 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/17 04:27:26 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/17 07:08:13 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ est-ce aue je dois check le nb de repqs dqns cette meme fonction ?*/
 int	check_death(t_datas *datas)
 {
 	int			i;
+	int ms;
 
 	while (datas->philo_nb > 1 /*&& !datas->dining_end*/)
 	{
@@ -51,16 +52,18 @@ int	check_death(t_datas *datas)
 		while (i < datas->philo_nb)
 		{
 			//printf("checkdeath\n");
-			//usleep(100);
+			usleep(300);
 			pthread_mutex_lock(&datas->death);
 			//printf("last_meal = %lld\n", datas->philos[i].last_meal);
 			//printf("death time = %lld\n", datas->philos[i].last_meal - get_time());
-			if ((datas->philos[i].last_meal - get_time()) > datas->t_t_die)
+			if ((get_time() - datas->philos[i].last_meal) > datas->t_t_die)
 			{
 				datas->dining_end = 1;
-				print_log(datas->philos, i + 1, "died");
+				ms = get_time() - datas->timestamp;
+				printf("%dms %d %s\n", ms, i + 1, "died");
+				//print_log(datas->philos, i + 1, "died");
 				pthread_mutex_unlock(&datas->death);
-				//usleep(800);
+				usleep(800);
 				return (1);
 			}
 			pthread_mutex_unlock(&datas->death);
@@ -68,7 +71,7 @@ int	check_death(t_datas *datas)
 		}
 		i = 0;
 		//printf("CHECKMEALS\n");
-		while (i < datas->philo_nb)
+		while (datas->meal_nb != -1 && i < datas->philo_nb)
 		{
 			pthread_mutex_lock(&datas->death);
 			if (datas->philos[i].meal_count
@@ -81,7 +84,7 @@ int	check_death(t_datas *datas)
 					>= datas->philos[i].datas->meal_nb))
 			{
 				datas->dining_end = 1;
-				//usleep(100);
+				usleep(300);
 				pthread_mutex_unlock(&datas->death);
 				return (1);
 			}
