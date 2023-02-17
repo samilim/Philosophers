@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 01:10:08 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/17 02:14:19 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/17 04:27:26 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ int	check_death(t_datas *datas)
 {
 	int			i;
 
-	while (datas->philo_nb > 1 && !datas->dining_end)
+	while (datas->philo_nb > 1 /*&& !datas->dining_end*/)
 	{
-		//printf("CHECKDEAT\n");
+		//printf("CHECKDEATH\n");
 		i = 0;
 		while (i < datas->philo_nb)
 		{
@@ -60,13 +60,14 @@ int	check_death(t_datas *datas)
 				datas->dining_end = 1;
 				print_log(datas->philos, i + 1, "died");
 				pthread_mutex_unlock(&datas->death);
-				//usleep(100);
+				//usleep(800);
 				return (1);
 			}
 			pthread_mutex_unlock(&datas->death);
 			i++;
 		}
 		i = 0;
+		//printf("CHECKMEALS\n");
 		while (i < datas->philo_nb)
 		{
 			pthread_mutex_lock(&datas->death);
@@ -80,6 +81,7 @@ int	check_death(t_datas *datas)
 					>= datas->philos[i].datas->meal_nb))
 			{
 				datas->dining_end = 1;
+				//usleep(100);
 				pthread_mutex_unlock(&datas->death);
 				return (1);
 			}
