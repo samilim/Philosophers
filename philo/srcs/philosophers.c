@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/12 06:12:18 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/17 02:20:23 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,19 @@ void	*routine_philo(void *philo_void)
 		usleep(400);
 	while (!philo->datas->dining_end)
 	{
-		printf("dining end = %d\n", philo->datas->dining_end);
+		//printf("dining end = %d\n", philo->datas->dining_end);
 		//write(1, "new cycle\n", 11);
 		pthread_mutex_lock(&philo->datas->meal);
-		if ((philo->datas->meal_nb
+		if (philo->datas->dining_end || (philo->datas->meal_nb
 				!= -1 && philo->meal_count >= philo->datas->meal_nb)) //si nb de rapas atteint pour ce philo, sortie de la routine
 		{
 			pthread_mutex_unlock(&philo->datas->meal);
 			break ;
 		}
-		philo->meal_count++;
 		pthread_mutex_unlock(&philo->datas->meal);
 		//write(1, "will enter eat\n", 15);
 		eat(philo);
+		philo->meal_count++;
 		//write(1, "sorti de eat\n", 14);;
 		print_log(philo, philo->position + 1, "is sleeping");
 		usleep(philo->datas->t_t_sleep * 1000);

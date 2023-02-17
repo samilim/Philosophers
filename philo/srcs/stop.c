@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 01:10:08 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/12 06:15:16 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/17 02:14:19 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,11 @@ int	check_dining_end(t_datas *datas)
 {
 	int			i;
 
-	while (1)
+	while (!datas->dining_end)
 	{
 		i = 0;
 		while (i < datas->philo_nb)
 		{
-			if (datas->dining_end)
-				return (0);
 			if (datas->philos[i].meal_count
 				< datas->philos[i].datas->meal_nb)
 				break ;
@@ -46,30 +44,48 @@ int	check_death(t_datas *datas)
 {
 	int			i;
 
-	while (datas->philo_nb > 1/* && !datas->dining_end*/)
+	while (datas->philo_nb > 1 && !datas->dining_end)
 	{
-		printf("CHECKDEATHHELLOOO???\n");
+		//printf("CHECKDEAT\n");
 		i = 0;
 		while (i < datas->philo_nb)
 		{
 			//printf("checkdeath\n");
-			usleep(100);
+			//usleep(100);
 			pthread_mutex_lock(&datas->death);
-			printf("last_meal = %lld\n", datas->philos[i].last_meal);
-			printf("death time = %lld\n", datas->philos[i].last_meal - get_time());
+			//printf("last_meal = %lld\n", datas->philos[i].last_meal);
+			//printf("death time = %lld\n", datas->philos[i].last_meal - get_time());
 			if ((datas->philos[i].last_meal - get_time()) > datas->t_t_die)
 			{
-				printf("mort found\n");
 				datas->dining_end = 1;
 				print_log(datas->philos, i + 1, "died");
 				pthread_mutex_unlock(&datas->death);
 				//usleep(100);
 				return (1);
 			}
-			printf("i++\n");
+			pthread_mutex_unlock(&datas->death);
+			i++;
+		}
+		i = 0;
+		while (i < datas->philo_nb)
+		{
+			pthread_mutex_lock(&datas->death);
+			if (datas->philos[i].meal_count
+				< datas->philos[i].datas->meal_nb)
+			{
+				pthread_mutex_unlock(&datas->death);
+				break ;
+			}
+			else if (i == (datas->philo_nb - 1) && (datas->philos[i].meal_count
+					>= datas->philos[i].datas->meal_nb))
+			{
+				datas->dining_end = 1;
+				pthread_mutex_unlock(&datas->death);
+				return (1);
+			}
+			pthread_mutex_unlock(&datas->death);
 			i++;
 		}
 	}
-	printf("sort de checkdeath\n");
 	return (1);
 }
