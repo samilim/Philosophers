@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 03:41:40 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/17 07:12:10 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/17 07:29:38 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,6 @@ void	*one_philo_case(t_philosopher *philo)
 /* nex eat fucntion where death is managed in an other func*/
 void	eat(t_philosopher *philo)
 {
-	//if (philo->meal_count == 1)
- 	//	philo->last_meal = philo->datas->timestamp;
- 	//else
- 	//	philo->last_meal = philo->meal_time;
-	//pthread_mutex_lock(&philo->datas->meal);
-	//pthread_mutex_unlock(&philo->datas->meal);
-	//pthread_mutex_lock(&philo->datas->meal);
 	// if (philo->position == (philo->datas->philo_nb -1))
 	// {
 	pthread_mutex_lock(&(philo->datas->forks[philo->left_fork]));
