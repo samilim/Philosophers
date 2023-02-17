@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/17 04:30:19 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/17 04:54:22 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	*routine_philo(void *philo_void)
 	if (philo->datas->philo_nb == 1)
 		return (one_philo_case(philo));
 	if (!((philo->position + 1) % 2))
-		usleep(400);
-	while (!philo->datas->dining_end)
+		usleep(200);
+	while (1/*!philo->datas->dining_end*/)
 	{
 		//printf("dining end = %d\n", philo->datas->dining_end);
 		//write(1, "new cycle\n", 11);
@@ -86,6 +86,8 @@ int	init_philos_and_mutexes(t_datas *datas)
 	if ((pthread_mutex_init(&datas->logs, NULL) != 0))
 		return (0);
 	if ((pthread_mutex_init(&datas->death, NULL) != 0))
+		return (0);
+	if ((pthread_mutex_init(&datas->fml, NULL) != 0))
 		return (0);
 	while (i < datas->philo_nb)
 	{

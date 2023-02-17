@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 03:41:40 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/17 04:30:47 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/17 04:47:46 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	eat(t_philosopher *philo)
 	print_log(philo, philo->position + 1, "has taken a fork");
 	pthread_mutex_lock(&(philo->datas->forks[philo->right_fork]));
 	print_log(philo, philo->position + 1, "has taken a fork");
-	pthread_mutex_lock(&philo->datas->meal);
 	print_log(philo, philo->position + 1, "is eating");
 		
 	//}
@@ -61,11 +60,12 @@ void	eat(t_philosopher *philo)
 	// 	pthread_mutex_lock(&(philo->datas->forks[philo->left_fork]));
 	// 	pthread_mutex_lock(&(philo->datas->forks[philo->right_fork]));
 	// }
-	
-	philo->last_meal = get_time();
-	pthread_mutex_unlock(&philo->datas->meal);
+	pthread_mutex_lock(&philo->datas->meal);
+	//last meal here
 	//usleep(philo->datas->t_t_eat * 1000);
 	smart_sleep(philo->datas, philo->datas->t_t_eat);
+	philo->last_meal = get_time();
+	pthread_mutex_unlock(&philo->datas->meal);
 	pthread_mutex_unlock(&(philo->datas->forks[philo->left_fork]));
 	pthread_mutex_unlock(&(philo->datas->forks[philo->right_fork]));
 }
