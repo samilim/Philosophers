@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:02:24 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/17 07:05:05 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/18 09:40:51 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void ft_clear(t_datas *datas)
 	pthread_mutex_destroy(&datas->meal);
 	pthread_mutex_destroy(&datas->logs);
 	pthread_mutex_destroy(&datas->death);
-	pthread_mutex_destroy(&datas->fml);
 	free(datas->philos);
 	free(datas->forks);
 }
@@ -37,20 +36,17 @@ int smart_sleep(t_datas *datas, long long ms)
 
 	time = 0;
 	// printf("smart sleep with ms = %lld\n", ms);
-	pthread_mutex_lock(&datas->fml);
 	while (time < ms)
 	{
 		// printf("usleep %d ", time);
 		// printf("\ndining end = %d \n", datas->dining_end);
 		if (datas->dining_end)
 		{
-			pthread_mutex_unlock(&datas->fml);
 			return (1);
 		}
 		usleep(1000);
 		time++;
 	}
-	pthread_mutex_unlock(&datas->fml);
 	return (0);
 }
 

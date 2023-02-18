@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 01:10:08 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/17 07:08:13 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/18 10:14:38 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ int	check_death(t_datas *datas)
 {
 	int			i;
 	int ms;
+	int maxmeals;
 
+	maxmeals = 0;
 	while (datas->philo_nb > 1 /*&& !datas->dining_end*/)
 	{
 		//printf("CHECKDEATH\n");
@@ -52,16 +54,17 @@ int	check_death(t_datas *datas)
 		while (i < datas->philo_nb)
 		{
 			//printf("checkdeath\n");
-			usleep(300);
+			usleep(800);
 			pthread_mutex_lock(&datas->death);
 			//printf("last_meal = %lld\n", datas->philos[i].last_meal);
 			//printf("death time = %lld\n", datas->philos[i].last_meal - get_time());
-			if ((get_time() - datas->philos[i].last_meal) > datas->t_t_die)
+			//get_time() - datas->philos[i].last_meal) > datas->t_t_die
+			if (((get_time() - datas->philos[i].last_meal)) > datas->t_t_die)
 			{
 				datas->dining_end = 1;
 				ms = get_time() - datas->timestamp;
-				printf("%dms %d %s\n", ms, i + 1, "died");
-				//print_log(datas->philos, i + 1, "died");
+				if (!maxmeals)
+					printf("%dms %d %s\n", ms, i + 1, "died");
 				pthread_mutex_unlock(&datas->death);
 				usleep(800);
 				return (1);
@@ -83,8 +86,9 @@ int	check_death(t_datas *datas)
 			else if (i == (datas->philo_nb - 1) && (datas->philos[i].meal_count
 					>= datas->philos[i].datas->meal_nb))
 			{
+				maxmeals = 1;
 				datas->dining_end = 1;
-				usleep(300);
+				//usleep(300);
 				pthread_mutex_unlock(&datas->death);
 				return (1);
 			}
