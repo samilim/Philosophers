@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/18 10:19:52 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/25 05:04:21 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,20 @@ int	start_philosophers_dining(t_datas *datas)
 		i++;
 	}
 
-	// pthread_t       *philos_thread;
-    // pthread_t       death_thread;
-	// philos_thread = malloc(sizeof(pthread_t) * datas->philo_nb);
-	// if (!(pthread_create(&death_thread, NULL, &check_death, datas) != 0))
-	// 		return (0);
-	// pthread_join(death_thread, NULL);
+	pthread_t       meal_tread;
+    pthread_t       death_thread;
+	
+	//philos_thread = malloc(sizeof(pthread_t) * datas->philo_nb); gne?
+	if (!(pthread_create(&death_thread, NULL, &check_death, datas) != 0))
+			return (0);
+	pthread_join(death_thread, NULL);
 
-	check_death(datas);
+
+	if (!(pthread_create(&meal_tread, NULL, &check_meals, datas) != 0))
+			return (0);
+	pthread_join(check_meals, NULL);
+	
+	//check_death(datas);
 	i = 0;
 	while (i < datas->philo_nb)
 	{
