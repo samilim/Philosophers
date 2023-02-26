@@ -6,13 +6,13 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:02:24 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/18 09:40:51 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/26 14:01:24 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void ft_clear(t_datas *datas)
+void ft_clear(t_datas *datas) /*déplacer les mutex destroy hors de cette fct ?*/
 {
 	int i;
 
@@ -47,6 +47,13 @@ int smart_sleep(t_datas *datas, long long ms)
 		usleep(1000);
 		time++;
 	}
+	/*OU
+	i = get_time();
+	while not dead
+		si gettime - i >= ttdie
+			break
+		usleep50
+	*/
 	return (0);
 }
 

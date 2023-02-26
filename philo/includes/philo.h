@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:20:36 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/25 05:09:03 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/26 14:11:11 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_datas
 	int				meal_nb;
 	int				maxmeals;
 	int				dining_end;
+	int				dead;
 	long long		timestamp;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	logs;
@@ -68,10 +69,12 @@ long long	get_time(void);
 void		print_log(
 				t_philosopher *philo, int id, char *message);
 void		eat(t_philosopher *philo);
-int			check_meals(t_datas *datas);
+//int			check_meals(t_datas *datas);
 void		ft_clear(t_datas *datas);
 int			smart_sleep(t_datas *datas, long long ms);
 void		*one_philo_case(t_philosopher *philo);
-int			check_death(t_datas *datas);
+//int			check_death(t_datas *datas);
+void			*check_meals(void *datas_void);
+void			*check_death(void *datas_void);
 
 #endif

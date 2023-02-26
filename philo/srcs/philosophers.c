@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/25 05:04:21 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/26 13:53:24 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	*routine_philo(void *philo_void)
 	if (philo->datas->philo_nb == 1)
 		return (one_philo_case(philo));
 	if (!((philo->position + 1) % 2))
-		usleep(200);
+		usleep(10000);
 	while (1/*!philo->datas->dining_end*/)
 	{
 		//printf("dining end = %d\n", philo->datas->dining_end);
@@ -67,18 +67,18 @@ int	start_philosophers_dining(t_datas *datas)
 		i++;
 	}
 
-	pthread_t       meal_tread;
+	pthread_t       meal_thread;
     pthread_t       death_thread;
+	
 	
 	//philos_thread = malloc(sizeof(pthread_t) * datas->philo_nb); gne?
 	if (!(pthread_create(&death_thread, NULL, &check_death, datas) != 0))
 			return (0);
-	pthread_join(death_thread, NULL);
-
-
-	if (!(pthread_create(&meal_tread, NULL, &check_meals, datas) != 0))
+	printf("YO\n");
+	if (!(pthread_create(&meal_thread, NULL, &check_meals, datas) != 0))
 			return (0);
-	pthread_join(check_meals, NULL);
+	pthread_join(death_thread, NULL);
+	pthread_join(meal_thread, NULL);
 	
 	//check_death(datas);
 	i = 0;
