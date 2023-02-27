@@ -284,7 +284,6 @@ void	*check_meals(void *datas_void)
 			else if (i == (datas->philo_nb - 1) && (datas->philos[i].meal_count
 					>= datas->philos[i].datas->meal_nb))
 			{
-				datas->maxmeals = 1;
 				datas->dining_end = 1;
 				//usleep(300);
 				pthread_mutex_unlock(&datas->death);

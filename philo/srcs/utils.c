@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:02:24 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/27 06:19:05 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/27 06:26:46 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,8 @@ int smart_sleep(t_datas *datas, long long ms)
 	int time;
 
 	time = 0;
-	// printf("smart sleep with ms = %lld\n", ms);
 	while (time < ms)
 	{
-		// printf("usleep %d ", time);
-		// printf("\ndining end = %d \n", datas->dining_end);
 		if (datas->dining_end || datas->dead)
 			return (1);
 		usleep(1000);

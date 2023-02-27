@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:20:36 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/27 05:34:54 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/27 06:38:54 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ typedef struct s_datas
 	int				t_t_eat;
 	int				t_t_die;
 	int				meal_nb;
-	int				maxmeals;
 	int				dining_end;
 	int				dead;
 	long long		timestamp;
