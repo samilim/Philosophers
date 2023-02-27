@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:20:36 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/26 14:11:11 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/27 05:34:54 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void		eat(t_philosopher *philo);
 void		ft_clear(t_datas *datas);
 int			smart_sleep(t_datas *datas, long long ms);
 void		*one_philo_case(t_philosopher *philo);
-//int			check_death(t_datas *datas);
-void			*check_meals(void *datas_void);
-void			*check_death(void *datas_void);
+int			check_death(t_datas *datas);
+//void			*check_meals(void *datas_void);
+//void			*check_death(void *datas_void);
 
 #endif

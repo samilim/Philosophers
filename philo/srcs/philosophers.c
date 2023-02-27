@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/26 13:53:24 by salimon          ###   ########.fr       */
+/*   Updated: 2023/02/27 06:22:11 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,24 @@ void	*routine_philo(void *philo_void)
 	if (philo->datas->philo_nb == 1)
 		return (one_philo_case(philo));
 	if (!((philo->position + 1) % 2))
-		usleep(10000);
+		usleep(800);
 	while (1/*!philo->datas->dining_end*/)
 	{
-		//printf("dining end = %d\n", philo->datas->dining_end);
-		//write(1, "new cycle\n", 11);
 		pthread_mutex_lock(&philo->datas->meal);
 		if (philo->datas->dining_end || (philo->datas->meal_nb
-				!= -1 && philo->meal_count >= philo->datas->meal_nb)) //si nb de rapas atteint pour ce philo, sortie de la routine
+				!= -1 && philo->meal_count >= philo->datas->meal_nb))
 		{
-			philo->last_meal = get_time();
+			//philo->last_meal = get_time();
 			pthread_mutex_unlock(&philo->datas->meal);
 			break ;
 		}
 		pthread_mutex_unlock(&philo->datas->meal);
-		//write(1, "will enter eat\n", 15);
 		eat(philo);
 		philo->meal_count++;
-		//write(1, "sorti de eat\n", 14);;
 		print_log(philo, philo->position + 1, "is sleeping");
-		//smart_sleep(philo->datas, philo->datas->t_t_sleep);
-		usleep(philo->datas->t_t_sleep * 1000);
+		smart_sleep(philo->datas, philo->datas->t_t_sleep);
+		//usleep(philo->datas->t_t_sleep * 1000);
 		print_log(philo, philo->position + 1, "is thinking");
-		//write(1, "fin de routine\n", 16);
 	}
 	return (NULL);
 }
@@ -57,7 +52,6 @@ int	start_philosophers_dining(t_datas *datas)
 
 	i = 0;
 	datas->timestamp = get_time();
-	//printf("timestamp = %lld\n", datas->timestamp);
 	while (i < datas->philo_nb)
 	{
 		if ((pthread_create(&datas->philos[i].id, NULL,
@@ -66,7 +60,7 @@ int	start_philosophers_dining(t_datas *datas)
 		datas->philos[i].last_meal = datas->timestamp;//
 		i++;
 	}
-
+/*
 	pthread_t       meal_thread;
     pthread_t       death_thread;
 	
@@ -79,8 +73,8 @@ int	start_philosophers_dining(t_datas *datas)
 			return (0);
 	pthread_join(death_thread, NULL);
 	pthread_join(meal_thread, NULL);
-	
-	//check_death(datas);
+	*/
+	check_death(datas);
 	i = 0;
 	while (i < datas->philo_nb)
 	{
