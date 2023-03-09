@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:02:24 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/27 06:26:46 by salimon          ###   ########.fr       */
+/*   Updated: 2023/03/09 03:02:20 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ int smart_sleep(t_datas *datas, long long ms)
 	while (time < ms)
 	{
 		if (datas->dining_end || datas->dead)
+		{
 			return (1);
+		}
 		usleep(1000);
 		time++;
 	}
@@ -81,7 +83,7 @@ void print_log(t_philosopher *philo, int id, char *message)
 
 	pthread_mutex_lock(&philo->datas->logs);
 	ms = get_time() - philo->datas->timestamp;
-	if (!philo->datas->dining_end)
+	if (!philo->datas->dining_end && !philo->datas->dead)
 		printf("%dms %d %s\n", ms, id, message);
 	pthread_mutex_unlock(&philo->datas->logs);
 }

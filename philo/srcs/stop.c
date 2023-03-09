@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 01:10:08 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/27 06:40:23 by salimon          ###   ########.fr       */
+/*   Updated: 2023/03/09 03:13:56 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	check_death(t_datas *datas)
 		i = 0;
 		while (i < datas->philo_nb && !datas->dead)
 		{
+			pthread_mutex_lock(&datas->death);
 			if (((get_time() - datas->philos[i].last_meal)) > datas->t_t_die)
 			{
 				datas->dead = 1;
@@ -37,8 +38,6 @@ int	check_death(t_datas *datas)
 			usleep(100);
 			i++;
 		}
-		if (datas->dead)
-			break;
 		i = 0;
 		while (datas-> meal_nb != -1 && i < datas->philo_nb && datas->philos[i].meal_count
 				>= datas->philos[i].datas->meal_nb)

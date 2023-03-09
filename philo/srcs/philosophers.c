@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/27 06:22:11 by salimon          ###   ########.fr       */
+/*   Updated: 2023/03/09 04:48:51 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*routine_philo(void *philo_void)
 		return (one_philo_case(philo));
 	if (!((philo->position + 1) % 2))
 		usleep(800);
-	while (1/*!philo->datas->dining_end*/)
+	while (1/*!philo->datas->dining_end && !philo->datas->dead*/)
 	{
 		pthread_mutex_lock(&philo->datas->meal);
 		if (philo->datas->dining_end || (philo->datas->meal_nb
@@ -37,14 +37,15 @@ void	*routine_philo(void *philo_void)
 		pthread_mutex_unlock(&philo->datas->meal);
 		eat(philo);
 		philo->meal_count++;
+		if (philo->datas->dead)
+			return(NULL);
 		print_log(philo, philo->position + 1, "is sleeping");
-		smart_sleep(philo->datas, philo->datas->t_t_sleep);
-		//usleep(philo->datas->t_t_sleep * 1000);
+		//smart_sleep(philo->datas, philo->datas->t_t_sleep);
+		usleep(philo->datas->t_t_sleep * 1000);
 		print_log(philo, philo->position + 1, "is thinking");
 	}
 	return (NULL);
 }
-
 
 int	start_philosophers_dining(t_datas *datas)
 {
