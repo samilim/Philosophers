@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:22:30 by salimon           #+#    #+#             */
-/*   Updated: 2023/03/09 04:48:51 by salimon          ###   ########.fr       */
+/*   Updated: 2023/03/12 08:26:06 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ void	*routine_philo(void *philo_void)
 		usleep(800);
 	while (1/*!philo->datas->dining_end && !philo->datas->dead*/)
 	{
-		pthread_mutex_lock(&philo->datas->meal);
-		if (philo->datas->dining_end || (philo->datas->meal_nb
-				!= -1 && philo->meal_count >= philo->datas->meal_nb))
+		//pthread_mutex_lock(&philo->datas->meal);
+		if (philo->datas->dining_end /*|| (philo->datas->meal_nb
+				!= -1 && philo->meal_count >= philo->datas->meal_nb)*/)
 		{
 			//philo->last_meal = get_time();
-			pthread_mutex_unlock(&philo->datas->meal);
+			//pthread_mutex_unlock(&philo->datas->meal);
 			break ;
 		}
-		pthread_mutex_unlock(&philo->datas->meal);
+		//pthread_mutex_unlock(&philo->datas->meal);
 		eat(philo);
 		philo->meal_count++;
 		if (philo->datas->dead)
