@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:02:24 by salimon           #+#    #+#             */
-/*   Updated: 2023/03/09 03:02:20 by salimon          ###   ########.fr       */
+/*   Updated: 2023/03/14 04:31:15 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,11 @@ void print_log(t_philosopher *philo, int id, char *message)
 
 	pthread_mutex_lock(&philo->datas->logs);
 	ms = get_time() - philo->datas->timestamp;
+	pthread_mutex_lock(&philo->datas->death);
+	pthread_mutex_lock(&philo->datas->meal);
 	if (!philo->datas->dining_end && !philo->datas->dead)
 		printf("%dms %d %s\n", ms, id, message);
+	pthread_mutex_unlock(&philo->datas->meal);
+	pthread_mutex_unlock(&philo->datas->death);
 	pthread_mutex_unlock(&philo->datas->logs);
 }
