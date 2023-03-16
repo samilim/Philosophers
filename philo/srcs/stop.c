@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 01:10:08 by salimon           #+#    #+#             */
-/*   Updated: 2023/03/14 04:41:05 by salimon          ###   ########.fr       */
+/*   Updated: 2023/03/16 02:01:37 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,16 @@ int	check_death(t_datas *datas)
 {
 	int			i;
 	int ms;
+	//int	dead;
+
+	//dead = 0;
 	
 	while (datas->philo_nb > 1 && !datas->dining_end)
 	{
 		i = 0;
 		while (i < datas->philo_nb && !datas->dead)
 		{
+			usleep(1000);
 			pthread_mutex_lock(&datas->death);
 			pthread_mutex_lock(&datas->meal);
 			if (((get_time() - datas->philos[i].last_meal)) > datas->t_t_die)
@@ -32,13 +36,14 @@ int	check_death(t_datas *datas)
 				ms = get_time() - datas->timestamp;
 				if (!datas->dining_end)
 					printf("%dms %d %s\n", ms, i + 1, "died");
-				pthread_mutex_unlock(&datas->death);
+				printf("calcul : %d\n", ((get_time() - datas->philos[i].last_meal)) > datas->t_t_die);
 				pthread_mutex_unlock(&datas->meal);
+				pthread_mutex_unlock(&datas->death);
 				return (1);
 			}
 			pthread_mutex_unlock(&datas->meal);
 			pthread_mutex_unlock(&datas->death);
-			usleep(100);
+			//usleep(800);
 			i++;
 		}
 		i = 0;
