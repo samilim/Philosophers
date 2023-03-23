@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:02:24 by salimon           #+#    #+#             */
-/*   Updated: 2023/03/23 01:52:16 by salimon          ###   ########.fr       */
+/*   Updated: 2023/03/23 04:11:19 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	ft_clear(t_datas *datas)
 	}
 	pthread_mutex_destroy(&datas->meal);
 	pthread_mutex_destroy(&datas->logs);
-	pthread_mutex_destroy(&datas->death);
 	free(datas->philos);
 	free(datas->forks);
 }
@@ -37,15 +36,12 @@ int	smart_sleep(t_datas *datas, long long ms)
 	time = 0;
 	while (time < ms)
 	{
-		pthread_mutex_lock(&datas->death);
 		pthread_mutex_lock(&datas->meal);
-		if (datas->dining_end || datas->dead)
+		if (datas->dining_end)
 		{
-			pthread_mutex_unlock(&datas->death);
 			pthread_mutex_unlock(&datas->meal);
 			return (1);
 		}
-		pthread_mutex_unlock(&datas->death);
 		pthread_mutex_unlock(&datas->meal);
 		usleep(1000);
 		time++;
@@ -89,11 +85,9 @@ void	print_log(t_philosopher *philo, int id, char *message)
 
 	pthread_mutex_lock(&philo->datas->logs);
 	ms = get_time() - philo->datas->timestamp;
-	pthread_mutex_lock(&philo->datas->death);
 	pthread_mutex_lock(&philo->datas->meal);
-	if (!philo->datas->dining_end && !philo->datas->dead)
+	if (!philo->datas->dining_end)
 		printf("%dms %d %s\n", ms, id, message);
 	pthread_mutex_unlock(&philo->datas->meal);
-	pthread_mutex_unlock(&philo->datas->death);
 	pthread_mutex_unlock(&philo->datas->logs);
 }

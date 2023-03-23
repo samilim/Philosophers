@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 02:54:52 by salimon           #+#    #+#             */
-/*   Updated: 2023/03/23 01:43:10 by salimon          ###   ########.fr       */
+/*   Updated: 2023/03/23 03:18:39 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	parsing(t_datas *datas, int argc, char **argv)
 	datas->t_t_eat = ft_atoi(argv[3]);
 	datas->t_t_sleep = ft_atoi(argv[4]);
 	datas->dining_end = 0;
-	datas->dead = 0;
 	if (datas->philo_nb < 1 || datas->philo_nb > 1000
 		|| datas->t_t_die < 0 || datas->t_t_eat < 0 || datas->t_t_sleep < 0)
 		return (0);

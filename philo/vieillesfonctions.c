@@ -1,3 +1,5 @@
+//-Wno-unused-parameter -g3
+
 //11 fev ver
 // void	*routine_philo(void *philo_void)
 // {

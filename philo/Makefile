@@ -8,7 +8,7 @@ NONE		='\033[0m'
 # comp
 NAME		= philo
 CC			= gcc
-CFLAGS		= -Wall -Werror -Wextra -g3 -Wno-unused-parameter
+CFLAGS		= -Wall -Werror -Wextra
 AR 			= ar rcs
 RM			= rm -f
 
