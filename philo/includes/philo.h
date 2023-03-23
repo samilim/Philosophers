@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 10:20:36 by salimon           #+#    #+#             */
-/*   Updated: 2023/03/23 04:28:24 by salimon          ###   ########.fr       */
+/*   Updated: 2023/03/23 04:34:00 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int			ft_atoi(const char *nb);
 long long	get_time(void);
 void		print_log(
 				t_philosopher *philo, int id, char *message);
-int		eat(t_philosopher *philo);
+int			eat(t_philosopher *philo);
 void		ft_clear(t_datas *datas);
 int			smart_sleep(t_datas *datas, long long ms);
 int			check_dining_state(t_datas *datas);
