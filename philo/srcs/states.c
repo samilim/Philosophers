@@ -6,22 +6,21 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 03:41:40 by salimon           #+#    #+#             */
-/*   Updated: 2023/03/14 04:25:34 by salimon          ###   ########.fr       */
+/*   Updated: 2023/03/23 03:00:12 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	*one_philo_case(t_philosopher *philo)
+int	one_philo_case(t_philosopher *philo)
 {
-
 	pthread_mutex_lock(&(philo->datas->forks[philo->left_fork]));
 	print_log(philo, philo->position + 1, "has taken a fork");
 	usleep(philo->datas->t_t_die * 1000);
 	print_log(philo, philo->position + 1, "died");
 	pthread_mutex_unlock(&(philo->datas->forks[philo->left_fork]));
 	philo->datas->dining_end = 1;
-	return (NULL);
+	return (1);
 }
 
 void	eat(t_philosopher *philo)
@@ -33,7 +32,6 @@ void	eat(t_philosopher *philo)
 		pthread_mutex_lock(&(philo->datas->forks[philo->right_fork]));
 		print_log(philo, philo->position + 1, "has taken a fork");
 		print_log(philo, philo->position + 1, "is eating");
-		
 	}
 	else
 	{
@@ -43,16 +41,7 @@ void	eat(t_philosopher *philo)
 		print_log(philo, philo->position + 1, "has taken a fork");
 		print_log(philo, philo->position + 1, "is eating");
 	}
-	
-	
-	pthread_mutex_lock(&philo->datas->meal);
-	philo->last_meal = get_time();
-	//philo->meal_count++;
-	pthread_mutex_unlock(&philo->datas->meal);
-	
 	usleep(philo->datas->t_t_eat * 1000);
-	//smart_sleep(philo->datas, philo->datas->t_t_eat);
-	
 	pthread_mutex_unlock(&(philo->datas->forks[philo->left_fork]));
 	pthread_mutex_unlock(&(philo->datas->forks[philo->right_fork]));
 }

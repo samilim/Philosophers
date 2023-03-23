@@ -6,7 +6,7 @@
 /*   By: salimon <salimon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 02:54:52 by salimon           #+#    #+#             */
-/*   Updated: 2023/02/26 14:11:57 by salimon          ###   ########.fr       */
+/*   Updated: 2023/03/23 01:43:10 by salimon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_digits(int argc, char **argv)
 	int	j;
 
 	i = 1;
-	if ((argv[1][0] == '\0') || (argv[2][0] == '\0') 
+	if ((argv[1][0] == '\0') || (argv[2][0] == '\0')
 		|| (argv[3][0] == '\0') || (argv [4][0] == '\0'))
 		return (0);
 	if (argc == 6 && argv[5][0] == '\0')
@@ -42,8 +42,6 @@ int	check_digits(int argc, char **argv)
 
 int	parsing(t_datas *datas, int argc, char **argv)
 {
-	if (!check_digits(argc, argv))
-		return (0);
 	datas->philo_nb = ft_atoi(argv[1]);
 	datas->philos
 		= (t_philosopher *)malloc(sizeof(*(datas->philos)) * datas->philo_nb);
